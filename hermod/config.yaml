@@ -1,0 +1,5 @@
+#hermod/config.yaml
+app_name: Hermod
+version: '0.1.0'
+author: 'Kaynen Pellegrino'
+description: 'Autonomous AI-powered development assistant'
