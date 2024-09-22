@@ -23,7 +23,7 @@ def load_config(config_file='config.yaml'):
         default_config = {
             'app_name': 'Hermod',
             'version': '0.1.0',
-            'author': 'Your Name',
+            'author': 'Kaynen Pellegrino',
             'description': 'Autonomous AI-powered development assistant',
         }
         with open(config_file, 'w', encoding='utf-8') as file:
