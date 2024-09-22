@@ -1,0 +1,33 @@
+************* Module hermod.core.auto_debugger
+hermod\core\auto_debugger.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+hermod\core\auto_debugger.py:16:54: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+************* Module hermod.core.code_generation
+hermod\core\code_generation.py:45:0: C0301: Line too long (113/100) (line-too-long)
+hermod\core\code_generation.py:101:0: C0304: Final newline missing (missing-final-newline)
+hermod\core\code_generation.py:62:11: W0703: Catching too general exception Exception (broad-except)
+hermod\core\code_generation.py:78:4: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
+hermod\core\code_generation.py:99:4: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+************* Module hermod.core.self_refactor
+hermod\core\self_refactor.py:25:0: C0301: Line too long (109/100) (line-too-long)
+hermod\core\self_refactor.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+hermod\core\self_refactor.py:16:4: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\self_refactor.py:19:57: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+hermod\core\self_refactor.py:22:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\self_refactor.py:32:61: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+hermod\core\self_refactor.py:34:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\self_refactor.py:36:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\self_refactor.py:5:0: C0411: standard import "import os" should be placed before "from hermod.core.code_generation import generate_code" (wrong-import-order)
+hermod\core\self_refactor.py:5:0: W0611: Unused import os (unused-import)
+************* Module hermod.core.test_generator
+hermod\core\test_generator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+hermod\core\test_generator.py:16:4: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\test_generator.py:20:57: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+hermod\core\test_generator.py:23:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\test_generator.py:39:59: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+hermod\core\test_generator.py:41:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\test_generator.py:43:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+hermod\core\test_generator.py:5:0: C0411: standard import "import os" should be placed before "from hermod.core.code_generation import generate_code" (wrong-import-order)
+
+------------------------------------------------------------------
+Your code has been rated at 8.11/10 (previous run: 7.74/10, +0.36)
+
