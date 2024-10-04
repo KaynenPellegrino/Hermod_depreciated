@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="71e77489-9b9d-44ba-8176-8b7a6bd7d191" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/build-docs.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/deploy.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Hermod.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generate_project_report.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ai_core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/ai_refinement.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/auto_docstring.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/cloud_deployer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/code_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/code_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/data_collector.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/data_synthesizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/documentation_updater.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/error_detector.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/error_recovery.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/feedback_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/git_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/gui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/gui_interface.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/learning_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/parallel_executor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/refactor_module.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/security_checker.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/self_diagnostics.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/self_modification.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/test_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/version_control.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2mxligLbuKf9NT46TppsCbyUPyk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kayne/PycharmProjects/Hermod&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kayne\PycharmProjects\HermodRewrite\src" />
+      <recent name="C:\Users\kayne\PycharmProjects\HermodRewrite\src\core" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.153" />
+        <option value="bundled-python-sdk-464836ebc622-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.153" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="71e77489-9b9d-44ba-8176-8b7a6bd7d191" name="Changes" comment="" />
+      <created>1728026236768</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1728026236768</updated>
+      <workItem from="1728026238112" duration="5073000" />
+      <workItem from="1728031388793" duration="900000" />
+      <workItem from="1728063819970" duration="2290000" />
+      <workItem from="1728066157530" duration="307000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

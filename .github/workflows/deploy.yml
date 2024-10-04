@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          python -m unittest discover
+
+      - name: Run security checks
+        run: |
+          pip install pylint bandit
+          pylint my_project/
+          bandit -r my_project/
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Set Google Cloud project
+        run: |
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy to Google Cloud Functions
+        run: |
+          gcloud functions deploy my-function \
+            --runtime python39 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --source ./my-function-directory
+
+      # Optionally, if you're using Google Kubernetes Engine (GKE):
+      # - name: Deploy to GKE
+      #   run: |
+      #     gcloud container clusters get-credentials my-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
+      #     kubectl apply -f ./k8s/deployment.yaml
