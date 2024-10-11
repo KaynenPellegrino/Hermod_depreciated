@@ -1,2 +1,6 @@
 # requirements.txt
 django>=3.2
+
+google~=3.0.0
+SQLAlchemy~=2.0.35
+setuptools~=75.1.0
