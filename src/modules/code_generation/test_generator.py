@@ -177,8 +177,8 @@ class TestGenerator:
 # Example usage and test cases
 if __name__ == "__main__":
     # Replace mock dependencies with actual implementations
-    from src.modules.project_management.project_manager import ProjectManager
-    from src.modules.template_management.template_manager import TemplateManager
+    from src.modules.code_generation.project_manager import ProjectManager
+    from src.modules.code_generation.template_manager import TemplateManager
 
     # Initialize real dependencies
     project_manager = ProjectManager()

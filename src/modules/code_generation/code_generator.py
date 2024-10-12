@@ -226,7 +226,7 @@ if __name__ == "__main__":
     unity_generator = UnityTemplateGenerator(template_manager)
     unreal_generator = UnrealTemplateGenerator(template_manager)
 
-    # Initialize CodeGenerator with all template generators
+    # Initialize CodeGenerator with template generators
     code_generator = CodeGenerator(
         template_manager=template_manager,
         ai_model=ai_model,
@@ -239,13 +239,17 @@ if __name__ == "__main__":
         unreal_generator=unreal_generator
     )
 
-    # Define user requirements
+    # Define user requirements for a Django project
     user_requirements = {
-        "project_type": "django",  # Could be 'flask', 'android', 'ios', 'unity', 'unreal'
+        "language": "Python",
+        "project_type": "django",
         "project_name": "MyDjangoApp",
         "app_name": "mainapp"
     }
 
     # Generate codebase for the project
-    project_id = "proj_12345"
+    project_id = "proj_django_001"
     code_generator.generate_codebase(project_id, user_requirements)
+
+    # Example: Save codebase to file system
+    # code_generator.save_codebase(project_id, codebase)
