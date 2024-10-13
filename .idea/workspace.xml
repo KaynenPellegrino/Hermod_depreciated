@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Hermod.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Hermod.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_collector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_exporter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_exporter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/vulneratbility_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/logger.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,20 +61,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.ios_template.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ios_template.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Development",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kayne\PycharmProjects\Hermod\src\modules\data_management\models" />
@@ -93,6 +103,7 @@
       <workItem from="1728438199637" duration="3383000" />
       <workItem from="1728613797688" duration="17036000" />
       <workItem from="1728764457216" duration="13119000" />
+      <workItem from="1728853688114" duration="5193000" />
     </task>
     <servers />
   </component>
