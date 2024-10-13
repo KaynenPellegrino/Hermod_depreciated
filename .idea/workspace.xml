@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/data_management/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/data_management/models/data_models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/federated_nodes/node_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_cleaner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_cleaner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_collector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_exporter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_exporter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_labeler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_labeler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_preprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_storage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_validator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_validator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/datasets/custom_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/datasets/custom_dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/datasets/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/datasets/data_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/federated_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/federated_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" afterDir="false" />
-    </list>
+    <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +38,7 @@
   "keyToString": {
     "Python.ios_template.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "5530a6a6",
+    "git-widget-placeholder": "Hermod__Development",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
