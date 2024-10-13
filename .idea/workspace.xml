@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/vulneratbility_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/metadata_storage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/notifications/notification_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/notifications/notification_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +91,7 @@
       <workItem from="1728438199637" duration="3383000" />
       <workItem from="1728613797688" duration="17036000" />
       <workItem from="1728764457216" duration="13119000" />
-      <workItem from="1728853688114" duration="5193000" />
+      <workItem from="1728853688114" duration="6652000" />
     </task>
     <servers />
   </component>
