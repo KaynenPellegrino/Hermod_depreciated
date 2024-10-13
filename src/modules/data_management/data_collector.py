@@ -5,7 +5,7 @@ import os
 import requests
 from typing import Dict, Any, List, Optional, Union
 from abc import ABC, abstractmethod
-from github import Github, Repository, GithubException
+from github import Github, GithubException, Repository
 from bs4 import BeautifulSoup
 import scrapy
 from scrapy.crawler import CrawlerProcess

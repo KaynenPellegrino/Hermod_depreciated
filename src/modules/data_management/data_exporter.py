@@ -275,71 +275,71 @@ class DataExporter:
         logger.info("Bulk data export completed.")
 
     # Example usage and test cases
-    if __name__ == "__main__":
-        # Initialize DataExporter
-        exporter = DataExporter()
+if __name__ == "__main__":
+    # Initialize DataExporter
+    exporter = DataExporter()
 
-        # Example DataFrame to export
-        data = {
-            'id': [1, 2, 3],
-            'name': ['Alice', 'Bob', 'Charlie'],
-            'score': [85.5, 92.3, 78.9]
+    # Example DataFrame to export
+    data = {
+        'id': [1, 2, 3],
+        'name': ['Alice', 'Bob', 'Charlie'],
+        'score': [85.5, 92.3, 78.9]
+    }
+    df = pd.DataFrame(data)
+
+    # Define export configurations
+    export_config = {
+        'csv': {
+            'file_path': 'data/exported_data/output_data.csv',
+            'kwargs': {'sep': ',', 'encoding': 'utf-8'}
+        },
+        'json': {
+            'file_path': 'data/exported_data/output_data.json',
+            'kwargs': {'orient': 'records', 'lines': True}
+        },
+        'excel': {
+            'file_path': 'data/exported_data/output_data.xlsx',
+            'kwargs': {'sheet_name': 'Data'}
+        },
+        'parquet': {
+            'file_path': 'data/exported_data/output_data.parquet',
+            'kwargs': {}
+        },
+        'sql': {
+            'table_name': 'exported_scores',
+            'db_type': 'postgresql',
+            'if_exists': 'replace',
+            'kwargs': {}
+        },
+        'mongodb': {
+            'db_name': 'hermod_export_db',
+            'collection_name': 'exported_scores',
+            'if_exists': 'replace',
+            'kwargs': {}
+        },
+        'api': {
+            'api_endpoint': 'https://example.com/api/data',
+            'method': 'POST',
+            'headers': {'Authorization': 'Bearer YOUR_API_TOKEN'},
+            'kwargs': {}
+        },
+        'model': {
+            'model': 'dummy_model',  # Replace with an actual trained model object
+            'file_path': 'model/exported_models/trained_model.joblib',
+            'kwargs': {}
         }
-        df = pd.DataFrame(data)
+    }
 
-        # Define export configurations
-        export_config = {
-            'csv': {
-                'file_path': 'data/exported_data/output_data.csv',
-                'kwargs': {'sep': ',', 'encoding': 'utf-8'}
-            },
-            'json': {
-                'file_path': 'data/exported_data/output_data.json',
-                'kwargs': {'orient': 'records', 'lines': True}
-            },
-            'excel': {
-                'file_path': 'data/exported_data/output_data.xlsx',
-                'kwargs': {'sheet_name': 'Data'}
-            },
-            'parquet': {
-                'file_path': 'data/exported_data/output_data.parquet',
-                'kwargs': {}
-            },
-            'sql': {
-                'table_name': 'exported_scores',
-                'db_type': 'postgresql',
-                'if_exists': 'replace',
-                'kwargs': {}
-            },
-            'mongodb': {
-                'db_name': 'hermod_export_db',
-                'collection_name': 'exported_scores',
-                'if_exists': 'replace',
-                'kwargs': {}
-            },
-            'api': {
-                'api_endpoint': 'https://example.com/api/data',
-                'method': 'POST',
-                'headers': {'Authorization': 'Bearer YOUR_API_TOKEN'},
-                'kwargs': {}
-            },
-            'model': {
-                'model': 'dummy_model',  # Replace with an actual trained model object
-                'file_path': 'model/exported_models/trained_model.joblib',
-                'kwargs': {}
-            }
-        }
+    # Perform bulk export
+    exporter.export_all(df, export_config)
 
-        # Perform bulk export
-        exporter.export_all(df, export_config)
+    # Example: Export a single DataFrame to CSV
+    exporter.export_to_csv(df, 'data/exported_data/single_output.csv', sep=',', encoding='utf-8')
 
-        # Example: Export a single DataFrame to CSV
-        exporter.export_to_csv(df, 'data/exported_data/single_output.csv', sep=',', encoding='utf-8')
+    # Example: Export a single DataFrame to a PostgreSQL table
+    exporter.export_to_sql(df, table_name='single_exported_scores', db_type='postgresql', if_exists='append')
 
-        # Example: Export a single DataFrame to a PostgreSQL table
-        exporter.export_to_sql(df, table_name='single_exported_scores', db_type='postgresql', if_exists='append')
-
-        # Example: Export a trained model to a file
-        # Assuming 'trained_pipeline' is a trained scikit-learn pipeline
-        # trained_pipeline = ...  # Obtain the trained model from data_trainer.py
-        # exporter.export_model(trained_pipeline, 'model/exported_models/trained_pipeline.joblib')
+    # Example: Export a trained model to a file
+    # Assuming 'trained_pipeline' is a trained scikit-learn pipeline
+    # trained_pipeline = ...  # Obtain the trained model from data_trainer.py
+    # exporter.export_model(trained_pipeline, 'model/exported_models/trained_pipeline.joblib')
