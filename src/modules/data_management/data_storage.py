@@ -1,4 +1,5 @@
 # src/modules/data_management/data_storage.py
+
 import base64
 import logging
 import os
@@ -82,6 +83,115 @@ class DataStorage:
                 logger.error(f"Failed to connect to MongoDB: {e}")
         else:
             logger.warning("MongoDB URI not provided. Skipping MongoDB initialization.")
+
+    # --------------------- New Methods --------------------- #
+
+    def save_data(self, table: str, data: Dict[str, Any]) -> bool:
+        """
+        Saves a single record to the specified table in PostgreSQL or MongoDB.
+
+        :param table: Name of the target table.
+        :param data: Dictionary containing the data to save.
+        :return: True if saving is successful, False otherwise.
+        """
+        logger.info(f"Saving data to table '{table}'. Data: {data}")
+
+        # Define which tables are stored in MongoDB. Update this list based on your schema.
+        mongodb_tables = ['system_anomalies']  # Example: anomalies might be stored in MongoDB
+
+        if table.lower() in mongodb_tables:
+            return self._save_to_mongodb_single_record(table, data)
+        else:
+            return self._save_to_sql_single_record(table, data)
+
+    def query_data(self, query: str, params: Dict[str, Any] = {}) -> Optional[List[Dict[str, Any]]]:
+        """
+        Executes a SQL query and returns the results.
+
+        :param query: SQL query string with placeholders for parameters.
+        :param params: Dictionary of parameters to substitute into the query.
+        :return: List of dictionaries representing the rows, or None if failed.
+        """
+        logger.info(f"Executing query: {query} with params: {params}")
+        engine = self.database_engines.get('postgresql')
+        if not engine:
+            logger.error("PostgreSQL engine is not initialized.")
+            return None
+
+        try:
+            with engine.connect() as connection:
+                result = connection.execute(query, **params)
+                columns = result.keys()
+                data = [dict(zip(columns, row)) for row in result.fetchall()]
+                logger.info(f"Query executed successfully. Retrieved {len(data)} records.")
+                return data
+        except SQLAlchemyError as e:
+            logger.error(f"Failed to execute query: {e}")
+            return None
+
+    # Helper methods for saving to specific databases
+    def _save_to_sql_single_record(self, table: str, data: Dict[str, Any]) -> bool:
+        """
+        Saves a single record to a SQL table.
+
+        :param table: Name of the target table.
+        :param data: Dictionary containing the data to save.
+        :return: True if saving is successful, False otherwise.
+        """
+        engine = self.database_engines.get('postgresql')
+        if not engine:
+            logger.error("PostgreSQL engine is not initialized.")
+            return False
+
+        try:
+            # Convert data to DataFrame
+            df = pd.DataFrame([data])
+            # Ensure raw data is saved in the designated raw directory
+            raw_data_dir = os.path.join('src', 'modules', 'data_management', 'datasets', 'raw', 'behavioral')
+            os.makedirs(raw_data_dir, exist_ok=True)
+            raw_file_path = os.path.join(raw_data_dir, f"{table}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
+            df.to_csv(raw_file_path, index=False)
+            logger.info(f"Raw data saved to '{raw_file_path}'.")
+
+            # Save to SQL
+            df.to_sql(table, engine, if_exists='append', index=False)
+            logger.info(f"Data saved to SQL table '{table}' successfully.")
+            return True
+        except SQLAlchemyError as e:
+            logger.error(f"Failed to save data to SQL table '{table}': {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error while saving to SQL: {e}")
+            return False
+
+    def _save_to_mongodb_single_record(self, collection_name: str, data: Dict[str, Any]) -> bool:
+        """
+        Saves a single record to a MongoDB collection.
+
+        :param collection_name: Name of the target collection.
+        :param data: Dictionary containing the data to save.
+        :return: True if saving is successful, False otherwise.
+        """
+        mongo_client = self.mongo_clients.get('mongodb')
+        if not mongo_client:
+            logger.error("MongoDB client is not initialized.")
+            return False
+
+        try:
+            db_name = os.getenv('MONGODB_DB_NAME', 'hermod_db')  # Default database name
+            db = mongo_client[db_name]
+            collection = db[collection_name]
+            collection.insert_one(data)
+            logger.info(f"Data saved to MongoDB collection '{collection_name}' successfully.")
+            return True
+        except pymongo_errors.PyMongoError as e:
+            logger.error(f"Failed to save data to MongoDB collection '{collection_name}': {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error while saving to MongoDB: {e}")
+            return False
+
+    # --------------------- Existing Methods --------------------- #
 
     def save_to_sql(self, df: pd.DataFrame, table_name: str, db_type: str = 'postgresql', if_exists: str = 'append',
                    **kwargs):
@@ -313,7 +423,6 @@ class DataStorage:
             # Serialize the model to a byte stream
             model_bytes = joblib.dumps(model)
             # Encode the bytes in base64 to safely transmit binary data
-            import base64
             model_b64 = base64.b64encode(model_bytes).decode('utf-8')
             payload = {'model': model_b64}
             response = requests.post(api_endpoint, json=payload, headers=headers, timeout=60, **kwargs)
