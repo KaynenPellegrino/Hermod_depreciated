@@ -1,12 +1,13 @@
-# data_management/data_storage.py
-
+# src/modules/data_management/data_storage.py
+import base64
 import logging
 import os
+from datetime import datetime
 from typing import Dict, Any, Optional, Union, List
 import pandas as pd
 import json
 
-from django.contrib.sites import requests
+import requests  # Corrected import
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 from pymongo import MongoClient, errors as pymongo_errors
@@ -83,7 +84,7 @@ class DataStorage:
             logger.warning("MongoDB URI not provided. Skipping MongoDB initialization.")
 
     def save_to_sql(self, df: pd.DataFrame, table_name: str, db_type: str = 'postgresql', if_exists: str = 'append',
-                    **kwargs):
+                   **kwargs):
         """
         Saves a DataFrame to a SQL database table.
 
@@ -100,7 +101,14 @@ class DataStorage:
             return
 
         try:
-            os.makedirs(os.path.dirname('data/sql_exports'), exist_ok=True)  # Example directory
+            # Ensure raw data is saved in the designated raw directory
+            raw_data_dir = os.path.join('src', 'modules', 'data_management', 'datasets', 'raw', 'behavioral')
+            os.makedirs(raw_data_dir, exist_ok=True)
+            raw_file_path = os.path.join(raw_data_dir, f"{table_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
+            df.to_csv(raw_file_path, index=False)
+            logger.info(f"Raw DataFrame saved to '{raw_file_path}' successfully.")
+
+            # Save to SQL
             df.to_sql(table_name, engine, if_exists=if_exists, index=False, **kwargs)
             logger.info(f"DataFrame saved to SQL table '{table_name}' successfully in '{db_type}' database.")
         except SQLAlchemyError as e:
@@ -156,7 +164,7 @@ class DataStorage:
             records = df.to_dict(orient='records')
             collection.insert_many(records, **kwargs)
             logger.info(
-                f"DataFrame saved to MongoDB collection '{collection_name}' successfully in database '{db_name}'.")
+                f"Successfully stored data to MongoDB collection '{collection_name}' in database '{db_name}'.")
         except pymongo_errors.PyMongoError as e:
             logger.error(f"Failed to save DataFrame to MongoDB collection '{collection_name}': {e}")
 
@@ -209,14 +217,14 @@ class DataStorage:
             if format.lower() == 'csv':
                 df.to_csv(file_path, index=False, **kwargs)
             elif format.lower() == 'json':
-                df.to_json(file_path, **kwargs)
+                df.to_json(file_path, orient='records', lines=True, **kwargs)
             elif format.lower() in ['xls', 'xlsx']:
                 df.to_excel(file_path, index=False, **kwargs)
             elif format.lower() == 'parquet':
                 df.to_parquet(file_path, index=False, **kwargs)
             else:
-                logger.error(f"Unsupported file format: {format}")
-                return
+                logger.error(f"Unsupported file format for storage: {format}")
+                raise ValueError(f"Unsupported file format for storage: {format}")
             logger.info(f"DataFrame saved to file '{file_path}' successfully.")
         except Exception as e:
             logger.error(f"Failed to save DataFrame to file '{file_path}': {e}")
@@ -304,9 +312,10 @@ class DataStorage:
         try:
             # Serialize the model to a byte stream
             model_bytes = joblib.dumps(model)
-            # Optionally, encode the bytes in base64 or another encoding if required by the API
-            # For simplicity, we'll send raw bytes in JSON (not recommended for large models)
-            payload = {'model': model_bytes.decode('latin1')}  # Using 'latin1' to preserve byte data
+            # Encode the bytes in base64 to safely transmit binary data
+            import base64
+            model_b64 = base64.b64encode(model_bytes).decode('utf-8')
+            payload = {'model': model_b64}
             response = requests.post(api_endpoint, json=payload, headers=headers, timeout=60, **kwargs)
             response.raise_for_status()
             logger.info(f"Model exported to external API '{api_endpoint}' successfully. Response: {response.text}")
@@ -330,12 +339,13 @@ class DataStorage:
             response = requests.get(api_endpoint, headers=headers, timeout=60, **kwargs)
             response.raise_for_status()
             data = response.json()
-            model_bytes = data.get('model')
-            if not model_bytes:
+            model_b64 = data.get('model')
+            if not model_b64:
                 logger.error(f"No model data found in response from '{api_endpoint}'.")
                 return None
-            # Decode the model bytes
-            model = joblib.loads(model_bytes.encode('latin1'))  # 'latin1' to reverse the earlier encoding
+            # Decode the model bytes from base64
+            model_bytes = base64.b64decode(model_b64.encode('utf-8'))
+            model = joblib.loads(model_bytes)
             logger.info(f"Model retrieved successfully from external API '{api_endpoint}'.")
             return model
         except requests.exceptions.RequestException as e:
@@ -373,8 +383,8 @@ class DataStorage:
                     self.save_to_file(df, 'temp_export.json', format='json')  # Temporarily save data
                     with open('temp_export.json', 'r') as f:
                         data = json.load(f)
-                    self.export_to_api(data, params['api_endpoint'], method=params.get('method', 'POST'),
-                                       headers=params.get('headers'), **params.get('kwargs', {}))
+                    self.export_model_to_external_system(data, params['api_endpoint'], method=params.get('method', 'POST'),
+                                                          headers=params.get('headers'), **params.get('kwargs', {}))
                     os.remove('temp_export.json')  # Clean up temporary file
                 elif export_type == 'model':
                     self.save_model(params['model'], params['file_path'], **params.get('kwargs', {}))
@@ -387,66 +397,66 @@ class DataStorage:
 
         logger.info("Bulk data export completed.")
 
-    # Example usage and test cases
-    if __name__ == "__main__":
-        # Initialize DataStorage
-        storage = DataStorage()
+# Example usage and test cases
+if __name__ == "__main__":
+    # Initialize DataStorage
+    storage = DataStorage()
 
-        # Example DataFrame to save
-        data = {
-            'id': [1, 2, 3],
-            'name': ['Alice', 'Bob', 'Charlie'],
-            'score': [85.5, 92.3, 78.9]
-        }
-        df = pd.DataFrame(data)
+    # Example DataFrame to save
+    data = {
+        'id': [1, 2, 3],
+        'name': ['Alice', 'Bob', 'Charlie'],
+        'score': [85.5, 92.3, 78.9]
+    }
+    df = pd.DataFrame(data)
 
-        # Example: Save DataFrame to PostgreSQL
-        storage.save_to_sql(df, table_name='students_scores', db_type='postgresql', if_exists='replace')
+    # Example: Save DataFrame to PostgreSQL
+    storage.save_to_sql(df, table_name='students_scores', db_type='postgresql', if_exists='replace')
 
-        # Example: Load DataFrame from PostgreSQL
-        query = "SELECT * FROM students_scores;"
-        loaded_df = storage.load_from_sql(query, db_type='postgresql')
-        if loaded_df is not None:
-            print("Loaded DataFrame from PostgreSQL:")
-            print(loaded_df)
+    # Example: Load DataFrame from PostgreSQL
+    query = "SELECT * FROM students_scores;"
+    loaded_df = storage.load_from_sql(query, db_type='postgresql')
+    if loaded_df is not None:
+        print("Loaded DataFrame from PostgreSQL:")
+        print(loaded_df)
 
-        # Example: Save DataFrame to MongoDB
-        storage.save_to_mongodb(df, db_name='hermod_db', collection_name='students_scores', if_exists='replace')
+    # Example: Save DataFrame to MongoDB
+    storage.save_to_mongodb(df, db_name='hermod_db', collection_name='students_scores', if_exists='replace')
 
-        # Example: Load DataFrame from MongoDB
-        loaded_df_mongo = storage.load_from_mongodb(db_name='hermod_db', collection_name='students_scores')
-        if loaded_df_mongo is not None:
-            print("\nLoaded DataFrame from MongoDB:")
-            print(loaded_df_mongo)
+    # Example: Load DataFrame from MongoDB
+    loaded_df_mongo = storage.load_from_mongodb(db_name='hermod_db', collection_name='students_scores')
+    if loaded_df_mongo is not None:
+        print("\nLoaded DataFrame from MongoDB:")
+        print(loaded_df_mongo)
 
-        # Example: Save DataFrame to CSV
-        storage.save_to_file(df, file_path='data/exported_data/students_scores.csv', format='csv', sep=',',
-                             encoding='utf-8')
+    # Example: Save DataFrame to CSV
+    storage.save_to_file(df, file_path='data/exported_data/students_scores.csv', format='csv', sep=',',
+                         encoding='utf-8')
 
-        # Example: Load DataFrame from CSV
-        loaded_df_csv = storage.load_from_file(file_path='data/exported_data/students_scores.csv', format='csv')
-        if loaded_df_csv is not None:
-            print("\nLoaded DataFrame from CSV:")
-            print(loaded_df_csv)
+    # Example: Load DataFrame from CSV
+    loaded_df_csv = storage.load_from_file(file_path='data/exported_data/students_scores.csv', format='csv')
+    if loaded_df_csv is not None:
+        print("\nLoaded DataFrame from CSV:")
+        print(loaded_df_csv)
 
-        # Example: Save and Load a Model
-        from sklearn.ensemble import RandomForestClassifier
+    # Example: Save and Load a Model
+    from sklearn.ensemble import RandomForestClassifier
 
-        # Initialize and train a dummy model
-        model = RandomForestClassifier()
-        X_train = loaded_df[['id', 'score']]
-        y_train = loaded_df['name']
-        model.fit(X_train, y_train)
+    # Initialize and train a dummy model
+    model = RandomForestClassifier()
+    X_train = loaded_df[['id', 'score']]
+    y_train = loaded_df['name']
+    model.fit(X_train, y_train)
 
-        # Save the model
-        storage.save_model(model, file_path='model/trained_models/random_forest.joblib')
+    # Save the model
+    storage.save_model(model, file_path='model/trained_models/random_forest.joblib')
 
-        # Load the model
-        loaded_model = storage.load_model(file_path='model/trained_models/random_forest.joblib')
-        if loaded_model:
-            predictions = loaded_model.predict(X_train)
-            print("\nModel Predictions:")
-            print(predictions)
+    # Load the model
+    loaded_model = storage.load_model(file_path='model/trained_models/random_forest.joblib')
+    if loaded_model:
+        predictions = loaded_model.predict(X_train)
+        print("\nModel Predictions:")
+        print(predictions)
 
-        # Example: Export model to external API (replace with actual API endpoint)
-        # storage.export_model_to_external_system(model, api_endpoint='https://example.com/api/upload_model', headers={'Authorization': 'Bearer YOUR_API_TOKEN'})
+    # Example: Export model to external API (replace with actual API endpoint)
+    # storage.export_model_to_external_system(model, api_endpoint='https://example.com/api/upload_model', headers={'Authorization': 'Bearer YOUR_API_TOKEN'})

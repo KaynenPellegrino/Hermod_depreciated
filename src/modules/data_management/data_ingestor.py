@@ -1,4 +1,4 @@
-# data_management/data_ingestor.py
+# src/modules/data_management/data_ingestor.py
 
 import logging
 import os
@@ -33,6 +33,9 @@ from .models.data_models import (
 
 # Import DataValidator
 from data_validator import DataValidator
+
+# Import BehavioralAuthenticationManager
+from src.modules.advanced_security.behavioral_authentication import BehavioralAuthenticationManager
 
 # Load environment variables from .env file
 load_dotenv()
@@ -343,6 +346,7 @@ class DataIngestor:
         self.validator = DataValidator()
         self.cleaner = DataCleaner()
         self.preprocessor = DataPreprocessor()  # Initialize DataPreprocessor
+        self.behavioral_auth_manager = BehavioralAuthenticationManager()  # Initialize BehavioralAuthenticationManager
         logging.info("DataIngestor initialized with all components.")
 
     def ingest_data(self, source_type: str, source: str, params: Dict[str, Any] = {}) -> Optional[pd.DataFrame]:
@@ -404,12 +408,11 @@ class DataIngestor:
             # Preprocessing Phase
             try:
                 # Define feature lists based on your data schema
-                numerical_features = cleaned_df.select_dtypes(include=['number']).columns.tolist()
-                categorical_features = cleaned_df.select_dtypes(include=['object', 'category']).columns.tolist()
-                text_features = [col for col in cleaned_df.columns if
-                                 'description' in col.lower() or 'text' in col.lower()]
-                date_features = [col for col in cleaned_df.columns if
-                                 'timestamp' in col.lower() or 'date' in col.lower()]
+                numerical_features = params.get('preprocess_params', {}).get('numerical_features', [])
+                categorical_features = params.get('preprocess_params', {}).get('categorical_features', [])
+                text_features = params.get('preprocess_params', {}).get('text_features', [])
+                date_features = params.get('preprocess_params', {}).get('date_features', [])
+                pca_components = params.get('preprocess_params', {}).get('pca_components', None)
 
                 # Build preprocessing pipeline
                 preprocessor_pipeline = self.preprocessor.build_preprocessing_pipeline(
@@ -417,7 +420,7 @@ class DataIngestor:
                     categorical_features=categorical_features,
                     text_features=text_features,
                     date_features=date_features,
-                    pca_components=10  # Example: Reduce to 10 components
+                    pca_components=pca_components
                 )
 
                 # Fit and transform the data
@@ -430,11 +433,43 @@ class DataIngestor:
                 logging.warning("No data after preprocessing.")
                 return None
 
+            # Behavioral Data Handling
+            try:
+                if 'behavioral_metrics' in params.get('storage_params', {}).get('additional_info', {}):
+                    user_id = params.get('storage_params', {}).get('additional_info', {}).get('user_id')
+                    if user_id and isinstance(user_id, int):
+                        # Register or update behavioral profile
+                        behavior_data = {
+                            'typing_speed': cleaned_df['typing_speed'].iloc[0],
+                            'typing_pattern_similarity': cleaned_df['typing_pattern_similarity'].iloc[0],
+                            'mouse_movement_similarity': cleaned_df['mouse_movement_similarity'].iloc[0],
+                            'login_time_variance': cleaned_df['login_time_variance'].iloc[0],
+                            'device_fingerprint': cleaned_df['device_fingerprint'].iloc[0]
+                        }
+                        registration_success = self.behavioral_auth_manager.save_behavioral_profile(user_id,
+                                                                                                    behavior_data)
+                        if not registration_success:
+                            logging.warning(f"Failed to register/update behavioral profile for user ID {user_id}.")
+            except Exception as e:
+                logging.error(f"Error during behavioral data handling: {e}")
+
+            # Log ingestion event
+            try:
+                from src.modules.data_management.metadata_storage import MetadataStorage
+                metadata_storage = MetadataStorage()
+                metadata_storage.save_metadata({
+                    'event': 'data_ingestion',
+                    'source_type': source_type,
+                    'source': source,
+                    'timestamp': datetime.utcnow().isoformat()
+                }, storage_type='data_ingestion_event')
+            except Exception as e:
+                logging.error(f"Error logging ingestion event: {e}")
+
             logging.info("Data ingestion, validation, cleaning, and preprocessing completed successfully.")
             return preprocessed_df
-
         except Exception as e:
-            logging.error(f"Unhandled exception during the ETL process: {e}")
+            logging.error(f"An error occurred during the data ingestion process: {e}")
             return None
 
     def ingest(self, source_type: str, source: str, params: Dict[str, Any],

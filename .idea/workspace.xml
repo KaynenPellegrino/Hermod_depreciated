@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/list_files.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/security_management/api_security_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/security_management/api_security_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/behavioral_authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/behavioral_authentication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/emerging_threat_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/emerging_threat_detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/quantum_resistant_algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/quantum_resistant_algorithms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_preprocessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_storage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/security_management/authentication_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/security_management/authentication_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +98,7 @@
       <workItem from="1728438199637" duration="3383000" />
       <workItem from="1728613797688" duration="17036000" />
       <workItem from="1728764457216" duration="13119000" />
-      <workItem from="1728853688114" duration="7329000" />
+      <workItem from="1728853688114" duration="11947000" />
     </task>
     <servers />
   </component>

@@ -20,7 +20,7 @@ from src.modules.notifications.notification_manager import NotificationManager
 
 # Import AdvancedSecurityManager from advanced_security module
 # Assuming advanced_security is another module that handles behavioral authentication
-from src.modules.advanced_security.behavioral_auth import AdvancedSecurityManager
+from src.modules.advanced_security.behavioral_authentication import AdvancedSecurityManager
 
 # Load environment variables
 load_dotenv()

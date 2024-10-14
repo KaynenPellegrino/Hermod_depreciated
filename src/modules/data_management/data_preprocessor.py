@@ -1,4 +1,4 @@
-# data_management/data_preprocessor.py
+# src/modules/data_management/data_preprocessor.py
 
 import logging
 from typing import Optional, List, Any, Dict
@@ -8,10 +8,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
     StandardScaler,
-    MinMaxScaler,
-    OneHotEncoder,
-    LabelEncoder,
-    OrdinalEncoder
+    OneHotEncoder
 )
 from sklearn.decomposition import PCA
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -24,7 +21,7 @@ from logging.handlers import RotatingFileHandler
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-handler = RotatingFileHandler('logs/hermod_data_preprocessor.log', maxBytes=10 ** 6, backupCount=5)
+handler = RotatingFileHandler('logs/hermod_data_preprocessor.log', maxBytes=10**6, backupCount=5)
 formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
 handler.setFormatter(formatter)
 if not logger.handlers:
