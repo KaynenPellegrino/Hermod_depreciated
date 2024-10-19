@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ data.title }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <!-- Include SocketIO client script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js" integrity="sha512-eVL5XHhLKZT/SrZlY1csd9dBlSZgEJ6g5Py1zEnGN/sBwr/5XhaDrkUD9jgT8YJdzpVfn3EdZlYZXFKZg1lV1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <header>
+        <h1 id="dashboard-title">{{ data.title }}</h1>
+    </header>
+    <main>
+        <section id="metrics">
+            <h2>Metrics</h2>
+            <ul id="metrics-list">
+                {% for metric, value in data.metrics.items() %}
+                <li><strong>{{ metric.replace('_', ' ').title() }}:</strong> <span>{{ value }}</span></li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section id="alerts">
+            <h2>Alerts</h2>
+            <ul id="alerts-list">
+                {% for alert in data.alerts %}
+                <li class="{{ alert.type }}">{{ alert.message }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section id="tools">
+            <h2>Tools</h2>
+            <ul id="tools-list">
+                {% for tool in data.tools %}
+                <li>
+                    <a href="{{ tool.url }}">{{ tool.name }}</a> - {{ tool.description }}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <script src="/static/js/scripts.js"></script>
+</body>
+</html>
