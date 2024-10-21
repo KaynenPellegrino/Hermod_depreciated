@@ -1,10 +1,12 @@
 # src/utils/validation_utils.py
+
 import json
 import re
 from typing import Any, Dict, List, Optional, Type, TypeVar
 from pydantic import BaseModel, ValidationError, validator, EmailStr, HttpUrl
 from validators import url as validate_url
 from src.utils.config_loader import ConfigurationManager
+from src.utils.helpers import sizeof_fmt  # Import sizeof_fmt from helpers.py
 
 # Load configuration
 config_manager = ConfigurationManager()

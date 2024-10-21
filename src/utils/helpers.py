@@ -144,3 +144,20 @@ def parse_size(size_str: str) -> int:
     size, unit = match.groups()
     size = float(size) * units[unit]
     return int(size)
+
+def sizeof_fmt(num: float, suffix: str = 'B') -> str:
+    """
+    Converts a file size to human-readable form.
+
+    Args:
+        num (float): The size in bytes.
+        suffix (str, optional): The suffix to use. Defaults to 'B'.
+
+    Returns:
+        str: Human-readable file size.
+    """
+    for unit in ['','K','M','G','T','P','E','Z']:
+        if abs(num) < 1024.0:
+            return f"{num:3.1f}{unit}{suffix}"
+        num /= 1024.0
+    return f"{num:.1f}Y{suffix}"

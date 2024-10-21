@@ -5,27 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/security.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/validation_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/client_portal/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/client_portal/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/client_portal/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/client_portal/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/client_portal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/client_portal/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/asgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/decorators.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +97,8 @@
       <workItem from="1728853688114" duration="12082000" />
       <workItem from="1728866408617" duration="3305000" />
       <workItem from="1729314747126" duration="5701000" />
-      <workItem from="1729484921323" duration="3459000" />
+      <workItem from="1729484921323" duration="3586000" />
+      <workItem from="1729488826324" duration="1582000" />
     </task>
     <servers />
   </component>
