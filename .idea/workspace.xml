@@ -5,48 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/static/css/scripts.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/html/client_portal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/html/dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/html/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/html/scripts.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/static/js/scripts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pipeline/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pipeline/data_pipeline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pipeline/evaluation_pipeline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pipeline/model_deployment_pipeline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pipeline/model_training_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/security.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/validation_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/auto_ml/hyperparameter_tuner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/auto_ml/hyperparameter_tuner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/auto_ml/model_ensemble_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/auto_ml/model_ensemble_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/cloud_integrations/cloud_service_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cloud_integrations/cloud_service_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/ci_cd_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/ci_cd_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/deployment_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/deployment_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/docker_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/docker_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/environment_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/environment_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/kubernetes_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/kubernetes_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/deployment/packager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/deployment/packager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/disaster_recovery/backup_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/disaster_recovery/backup_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/disaster_recovery/recovery_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/disaster_recovery/recovery_system.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/error_handling/auto_error_resolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/error_handling/auto_error_resolver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/error_handling/error_alerts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/error_handling/error_alerts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/error_handling/error_logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/error_handling/error_logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ethical_ai/bias_mitigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ethical_ai/bias_mitigator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ethical_ai/ethical_decision_maker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ethical_ai/ethical_decision_maker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ethical_ai/gdpr_compliance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ethical_ai/gdpr_compliance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ethical_ai/privacy_preservation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ethical_ai/privacy_preservation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/performance_monitoring/metrics_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/performance_monitoring/metrics_collector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/performance_monitoring/performance_analyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/performance_monitoring/performance_analyzer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/performance_monitoring/scalability_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/performance_monitoring/scalability_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/risk_management/blockchain_auditor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/risk_management/blockchain_auditor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/risk_management/compliance_auditor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/risk_management/compliance_auditor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/risk_management/operational_risk_assessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/risk_management/operational_risk_assessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/risk_management/security_risk_assessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/risk_management/security_risk_assessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ui_ux/customization_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ui_ux/customization_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ui_ux/dashboard_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ui_ux/dashboard_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ui_ux/realtime_updater.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ui_ux/realtime_updater.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/asgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/config_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/decorators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +111,8 @@
       <workItem from="1728764457216" duration="13119000" />
       <workItem from="1728853688114" duration="12082000" />
       <workItem from="1728866408617" duration="3305000" />
-      <workItem from="1729314747126" duration="5249000" />
+      <workItem from="1729314747126" duration="5701000" />
+      <workItem from="1729484921323" duration="3459000" />
     </task>
     <servers />
   </component>
