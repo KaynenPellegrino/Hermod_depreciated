@@ -9,7 +9,7 @@ import re
 import uuid
 from datetime import datetime, timedelta
 from email.message import EmailMessage
-from typing import Optional
+from typing import Optional, List, Tuple
 from src.utils.config_loader import ConfigurationManager
 
 # Load configuration
@@ -22,14 +22,15 @@ EMAIL_USE_TLS = config_manager.get('email.use_tls', True)
 EMAIL_USE_SSL = config_manager.get('email.use_ssl', False)
 DEFAULT_FROM_EMAIL = config_manager.get('email.default_from', 'noreply@example.com')
 
+
 def send_email(
     subject: str,
     body: str,
-    to: list,
+    to: List[str],
     from_email: Optional[str] = None,
-    cc: Optional[list] = None,
-    bcc: Optional[list] = None,
-    attachments: Optional[list] = None,
+    cc: Optional[List[str]] = None,
+    bcc: Optional[List[str]] = None,
+    attachments: Optional[List[Tuple[str, bytes, str]]] = None,
 ) -> bool:
     """
     Sends an email using SMTP.
@@ -49,8 +50,9 @@ def send_email(
         for attachment in attachments:
             # attachment should be a tuple (filename, content, mimetype)
             filename, content, mimetype = attachment
-            msg.add_attachment(content, maintype=mimetype.split('/')[0],
-                               subtype=mimetype.split('/')[1], filename=filename)
+            maintype, subtype = mimetype.split('/', 1)
+            msg.add_attachment(content, maintype=maintype,
+                               subtype=subtype, filename=filename)
 
     try:
         if EMAIL_USE_SSL:
@@ -70,6 +72,7 @@ def send_email(
         logger.exception(f"Failed to send email: {e}")
         return False
 
+
 def generate_random_password(length: int = 12) -> str:
     """
     Generates a secure random password.
@@ -77,6 +80,7 @@ def generate_random_password(length: int = 12) -> str:
     chars = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(random.SystemRandom().choice(chars) for _ in range(length))
     return password
+
 
 def slugify(value: str, allow_unicode: bool = False) -> str:
     """
@@ -90,6 +94,7 @@ def slugify(value: str, allow_unicode: bool = False) -> str:
     value = re.sub(r'[^\w\s-]', '', value.lower())
     value = re.sub(r'[-\s]+', '-', value).strip('-_')
     return value
+
 
 def humanize_time(delta: timedelta) -> str:
     """
@@ -112,17 +117,20 @@ def humanize_time(delta: timedelta) -> str:
                 strings.append(f"{period_value} {period_name}{'s' if period_value > 1 else ''}")
     return ', '.join(strings)
 
+
 def get_current_timestamp() -> int:
     """
     Returns the current UTC timestamp.
     """
     return int(datetime.utcnow().timestamp())
 
+
 def generate_uuid() -> str:
     """
     Generates a UUID string.
     """
     return str(uuid.uuid4())
+
 
 def secure_filename(filename: str) -> str:
     """
@@ -131,6 +139,7 @@ def secure_filename(filename: str) -> str:
     filename = os.path.basename(filename)
     filename = filename.replace(os.path.sep, '_')
     return filename
+
 
 def parse_size(size_str: str) -> int:
     """
@@ -144,6 +153,7 @@ def parse_size(size_str: str) -> int:
     size, unit = match.groups()
     size = float(size) * units[unit]
     return int(size)
+
 
 def sizeof_fmt(num: float, suffix: str = 'B') -> str:
     """
@@ -161,3 +171,17 @@ def sizeof_fmt(num: float, suffix: str = 'B') -> str:
             return f"{num:3.1f}{unit}{suffix}"
         num /= 1024.0
     return f"{num:.1f}Y{suffix}"
+
+
+def format_code_snippet(code: str) -> str:
+    """
+    Formats a code snippet for better readability.
+
+    Args:
+        code (str): The code snippet to format.
+
+    Returns:
+        str: The formatted code snippet.
+    """
+    import textwrap
+    return textwrap.indent(code.strip(), '    ')

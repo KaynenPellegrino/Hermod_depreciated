@@ -47,28 +47,41 @@ class ConfigurationManager:
 
     def get_value(self, project_id: str, key: str) -> Any:
         """
-        Retrieves a specific configuration value for a project.
+        Retrieves a specific configuration value for a project using dot-notation.
 
         :param project_id: Unique identifier for the project
-        :param key: Key of the configuration value to retrieve
+        :param key: Key of the configuration value to retrieve, using dot-notation (e.g., 'intent_classifier.spacy_model')
         :return: The configuration value, or None if the key does not exist
         """
         configuration = self.get_configuration(project_id)
-        value = configuration.get(key, None)
+        keys = key.split('.')
+        value = configuration
+        for k in keys:
+            if isinstance(value, dict) and k in value:
+                value = value[k]
+            else:
+                logging.debug(f"Key '{key}' not found in project_id='{project_id}'.")
+                return None
         logging.debug(f"Retrieved value for key='{key}' in project_id='{project_id}': {value}")
         return value
 
     def set_value(self, project_id: str, key: str, value: Any) -> None:
         """
-        Sets a specific configuration value for a project.
+        Sets a specific configuration value for a project using dot-notation.
 
         :param project_id: Unique identifier for the project
-        :param key: Key of the configuration value to set
+        :param key: Key of the configuration value to set, using dot-notation (e.g., 'intent_classifier.spacy_model')
         :param value: The value to set for the specified key
         """
         if project_id not in self.configurations:
             self.configurations[project_id] = {}
-        self.configurations[project_id][key] = value
+        keys = key.split('.')
+        config = self.configurations[project_id]
+        for k in keys[:-1]:
+            if k not in config or not isinstance(config[k], dict):
+                config[k] = {}
+            config = config[k]
+        config[keys[-1]] = value
         logging.info(f"Set value for key='{key}' in project_id='{project_id}' to '{value}'")
         logging.debug(f"Current configuration for project_id='{project_id}': {self.configurations[project_id]}")
 
