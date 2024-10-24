@@ -2,7 +2,8 @@
 
 import logging
 import os
-from typing import Dict, Any, Optional, Union
+import json  # Added import for JSON handling
+from typing import Dict, Any, Optional, Union, List
 import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
@@ -15,14 +16,9 @@ import time
 import hashlib
 
 from data_labeler import DataLabeler
-
-# Import Data Cleaner
 from data_cleaner import DataCleaner
-
-# Import Data Preprocessor
 from data_preprocessor import DataPreprocessor
-
-# Import Data Models from the models package
+from utils.logger import get_logger
 from .models.data_models import (
     BaseDataModel,
     GitHubRepoDataModel,
@@ -30,12 +26,10 @@ from .models.data_models import (
     FileDataModel,
     TwitterDataModel  # Example additional model
 )
-
-# Import DataValidator
 from data_validator import DataValidator
-
-# Import BehavioralAuthenticationManager
-from src.modules.advanced_security.behavioral_authentication import BehavioralAuthenticationManager
+from src.modules.data_management.metadata_storage import MetadataStorage
+from src.modules.advanced_security.behavioral_authentication import BehavioralAuthenticationManager  # Ensure correct import path
+from src.modules.collaboration.version_control import VersionControlManager  # Ensure correct import path
 
 # Load environment variables from .env file
 load_dotenv()
@@ -340,6 +334,8 @@ class DataIngestor:
         :param api_ingestor: Instance of APIIngestor
         :param file_ingestor: Instance of FileIngestor
         """
+        self.logger = get_logger(__name__)
+        self.project_id = os.getenv('PROJECT_ID', 'default_project')  # Ensure PROJECT_ID is set
         self.db_ingestor = db_ingestor
         self.api_ingestor = api_ingestor
         self.file_ingestor = file_ingestor
@@ -347,10 +343,21 @@ class DataIngestor:
         self.cleaner = DataCleaner()
         self.preprocessor = DataPreprocessor()  # Initialize DataPreprocessor
         self.behavioral_auth_manager = BehavioralAuthenticationManager()  # Initialize BehavioralAuthenticationManager
+        self.metadata_storage = MetadataStorage()  # Initialize MetadataStorage
         logging.info("DataIngestor initialized with all components.")
 
     def ingest_data(self, source_type: str, source: str, params: Dict[str, Any] = {}) -> Optional[pd.DataFrame]:
+        """
+        Performs the ETL (Extract, Transform, Load) process: ingestion, validation, cleaning, and preprocessing.
+
+        :param source_type: Type of the data source ('database', 'api', 'file')
+        :param source: Identifier for the data source (e.g., DB type, API URL, file path)
+        :param params: Parameters dict specific to the source type
+        :return: Preprocessed DataFrame or None if ETL fails
+        """
         logging.info(f"Starting data ingestion for source type '{source_type}' and source '{source}'.")
+        preprocessed_df = None  # Initialize as None
+
         try:
             # Extraction Phase
             if source_type.lower() == 'database':
@@ -455,9 +462,7 @@ class DataIngestor:
 
             # Log ingestion event
             try:
-                from src.modules.data_management.metadata_storage import MetadataStorage
-                metadata_storage = MetadataStorage()
-                metadata_storage.save_metadata({
+                self.metadata_storage.save_metadata({
                     'event': 'data_ingestion',
                     'source_type': source_type,
                     'source': source,
@@ -467,10 +472,12 @@ class DataIngestor:
                 logging.error(f"Error logging ingestion event: {e}")
 
             logging.info("Data ingestion, validation, cleaning, and preprocessing completed successfully.")
-            return preprocessed_df
-        except Exception as e:
-            logging.error(f"An error occurred during the data ingestion process: {e}")
-            return None
+
+        except Exception as general_error:
+            logging.error(f"Unexpected error in ingest_data: {general_error}")
+
+        finally:
+            return preprocessed_df  # Always return the preprocessed_df, even if None
 
     def ingest(self, source_type: str, source: str, params: Dict[str, Any],
                storage_type: str, storage_params: Dict[str, Any],
@@ -630,8 +637,57 @@ class DataIngestor:
             logging.error(f"Failed to store data: {e}")
             return False
 
+    def ingest_error_logs(self, file_path: str) -> Dict[str, Any]:
+        """
+        Ingests error logs from a specified file.
+
+        Args:
+            file_path (str): Path to the error log file.
+
+        Returns:
+            Dict[str, Any]: Parsed error log data.
+        """
+        self.logger.info(f"Ingesting error logs from '{file_path}'.")
+        try:
+            with open(file_path, 'r') as f:
+                logs = f.readlines()
+            # Placeholder for parsing logic
+            parsed_logs = {'errors': [log.strip() for log in logs if 'ERROR' in log]}
+            self.logger.debug(f"Parsed error logs: {parsed_logs}")
+            return parsed_logs
+        except Exception as e:
+            self.logger.error(f"Failed to ingest error logs: {e}", exc_info=True)
+            return {}
+
+    def load_meta_tasks(self) -> Optional[List[Dict[str, Any]]]:
+        """
+        Loads meta-learning tasks.
+
+        Returns:
+            Optional[List[Dict[str, Any]]]: List of task dictionaries containing support and query sets.
+        """
+        self.logger.info("Loading meta-learning tasks.")
+        try:
+            file_path = f"data/processed/{self.project_id}_meta_tasks.json"
+            with open(file_path, 'r') as f:
+                tasks = json.load(f)
+            self.logger.debug(f"Loaded {len(tasks)} meta-learning tasks from '{file_path}'.")
+            return tasks
+        except FileNotFoundError:
+            self.logger.error(f"Meta-learning tasks file '{file_path}' not found.")
+            return None
+        except json.JSONDecodeError as e:
+            self.logger.error(f"JSON decode error while loading '{file_path}': {e}", exc_info=True)
+            return None
+        except Exception as e:
+            self.logger.error(f"Failed to load meta-learning tasks from '{file_path}': {e}", exc_info=True)
+            return None
+
+
     # Example usage and test cases
 if __name__ == "__main__":
+    import json  # Ensure json is imported in the main block if needed
+
     # Initialize Ingestors
     try:
         db_ingestor = DatabaseIngestor()
@@ -771,7 +827,7 @@ if __name__ == "__main__":
             storage_type='file',
             storage_params=storage_params,
             preprocess_params={
-                'numerical_features': ['id', 'public_metrics_retweet_count', 'public_metrics_like_count'],
+                'numerical_features': ['id', 'public_metrics.retweet_count', 'public_metrics.like_count'],
                 'categorical_features': ['lang'],
                 'text_features': ['text'],
                 'date_features': ['created_at'],
@@ -850,49 +906,23 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Failed ETL from Excel file: {e}")
 
-    # Example 6: Run Real-Time ETL (Optional)
-    # Uncomment the following lines to run ETL every 60 seconds
-    """
+    # **Example 6: Ingest meta-learning tasks required by meta_learner.py**
     try:
-        real_time_task = {
-            'source_type': 'api',
-            'source': api_source,
-            'params': api_params,
-            'storage_type': 'file',
-            'storage_params': {
-                'file_path': 'data/raw/nlu_data',  # Directory path
-                'file_format': 'json',
-                'base_name': 'ingested_real_time_twitter_data'  # Base name for the file
-            },
-            'preprocess_params': {
-                'numerical_features': ['id', 'public_metrics_retweet_count', 'public_metrics_like_count'],
-                'categorical_features': ['lang'],
-                'text_features': ['text'],
-                'date_features': ['created_at'],
-                'pca_components': 10
-            },
-            'labeling_params': {
-                'label_model_path': 'model/nlu_models/nlu_labeling_model.joblib',
-                'labeling_threshold': 0.75,
-                'human_involvement': True
-            }
-        }
-
-        data_ingestor.run_realtime_etl(
-            source_type=real_time_task['source_type'],
-            source=real_time_task['source'],
-            params=real_time_task['params'],
-            storage_type=real_time_task['storage_type'],
-            storage_params=real_time_task['storage_params'],
-            preprocess_params=real_time_task['preprocess_params'],
-            labeling_params=real_time_task['labeling_params'],
-            interval=60  # Run every 60 seconds
-        )
-
-        # Let it run for a certain period then stop (e.g., 5 minutes)
-        time.sleep(300)
-        data_ingestor.stop_realtime_etl()
-        print("\nReal-time ETL process completed.")
+        meta_tasks_file = 'data/processed/proj_12345_meta_tasks.json'  # Replace with your meta tasks file path
+        if os.path.exists(meta_tasks_file):
+            meta_tasks = data_ingestor.load_meta_tasks()
+            print("\nMeta-Learning Tasks Loaded Successfully:")
+            print(meta_tasks)
+        else:
+            logging.warning(f"Meta tasks file '{meta_tasks_file}' does not exist.")
     except Exception as e:
-        print(f"Failed Real-time ETL: {e}")
-    """
+        print(f"Failed to load meta-learning tasks: {e}")
+
+    # Example 7: Ingest error logs
+    try:
+        error_log_file = 'logs/hermod_application.log'  # Replace with your actual error log file path
+        error_logs = data_ingestor.ingest_error_logs(error_log_file)
+        print("\nIngested Error Logs:")
+        print(error_logs)
+    except Exception as e:
+        print(f"Failed to ingest error logs: {e}")
