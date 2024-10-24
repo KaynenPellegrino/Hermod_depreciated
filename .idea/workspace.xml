@@ -5,48 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/optimize_algorithms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/remove_redundancies.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/self_optimization/rl_environment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/collaboration_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/collaboration_tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/collaborative_workspace_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/collaborative_workspace_dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/project_sharing_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/project_sharing_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/real_time_collaboration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/real_time_collaboration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/secure_collaboration_protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/secure_collaboration_protocol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/secure_communication.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/secure_communication.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/version_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/version_control.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/video_voice_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/video_voice_tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/data_management/data_ingestor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/feedback_loop/feedback_analyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/feedback_loop/feedback_analyzer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/audio_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/audio_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/image_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/image_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/multimodal_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/multimodal_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/speech_to_text.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/speech_to_text.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/video_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/video_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/action_executor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/action_executor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/adaptive_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/adaptive_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/ai_decision_tracker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/ai_decision_tracker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/auto_code_refactor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/auto_code_refactor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/automl_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/automl_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/federated_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/federated_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/graph_database_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/graph_database_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/knowledge_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/knowledge_graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/maintenance_planner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/maintenance_planner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/meta_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/meta_learner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/model_registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/model_registry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/multi_agent_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/multi_agent_system.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/online_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/online_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/persistent_memory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/persistent_memory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/post_mortem_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/post_mortem_learner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/predictive_optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/predictive_optimizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/reinforcement_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/reinforcement_learner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/self_commit.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/self_commit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/self_optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/self_optimizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/self_reflection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/self_reflection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/configuration_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/configuration_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/ethical_decision_making.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/ethical_decision_making.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/feedback_loop/user_feedback_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/feedback_loop/user_feedback_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/cnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/rnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/rnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/transformer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/nlu/entity_recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/nlu/entity_recognizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,21 +55,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.ios_template.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Development&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kayne/PycharmProjects/Hermod/data/models/nlu_models/qa_model&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ios_template.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Development",
+    "last_opened_file_path": "C:/Users/kayne/PycharmProjects/Hermod/data/models/nlu_models/qa_model",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kayne\PycharmProjects\Hermod\data\models\nlu_models\qa_model" />
@@ -141,7 +108,8 @@
       <workItem from="1729488826324" duration="1954000" />
       <workItem from="1729570452100" duration="889000" />
       <workItem from="1729571810451" duration="9327000" />
-      <workItem from="1729740412603" duration="5297000" />
+      <workItem from="1729740412603" duration="6699000" />
+      <workItem from="1729747572882" duration="5102000" />
     </task>
     <servers />
   </component>

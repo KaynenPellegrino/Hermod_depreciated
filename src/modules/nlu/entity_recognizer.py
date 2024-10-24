@@ -1,5 +1,3 @@
-# src/modules/nlu/entity_recognizer.py
-
 import logging
 from typing import Dict, Any, List
 
@@ -7,7 +5,6 @@ import pandas as pd
 import joblib
 import os
 
-import spacy
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -40,19 +37,7 @@ class EntityRecognizer:
         self.roberta_model = RoBERTAModel(project_id)
 
         # Path to save/load the entity recognition model
-        self.model_path = self.config_manager.get_value(project_id,
-                                                        'entity_recognizer.model_path') or 'data/models/nlu_models/entity_recognizer.joblib'
-
-        # Initialize spaCy model for text preprocessing
-        self.model_name = self.config_manager.get_value(project_id, 'entity_recognizer.spacy_model') or 'en_core_web_sm'
-        self.logger.debug(f"Loading spaCy model: {self.model_name}")
-
-        try:
-            self.nlp = spacy.load(self.model_name, disable=['parser', 'ner'])
-            self.logger.info(f"spaCy model '{self.model_name}' loaded successfully.")
-        except Exception as e:
-            self.logger.error(f"Failed to load spaCy model '{self.model_name}': {e}", exc_info=True)
-            raise
+        self.model_path = self.config_manager.get_value(project_id, 'entity_recognizer.model_path') or 'data/models/nlu_models/entity_recognizer.joblib'
 
     def train_model(self, training_data: pd.DataFrame, test_size: float = 0.2) -> None:
         """
@@ -70,11 +55,9 @@ class EntityRecognizer:
 
             # Split the data into training and testing sets
             from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=42
-            )
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
 
-            # Generate embeddings for training data
+            # Generate embeddings for training data using RoBERTAModel
             self.logger.debug("Generating embeddings for training data.")
             X_train_embeddings = [self.roberta_model.generate_embeddings(text)['embeddings'] for text in X_train]
             X_test_embeddings = [self.roberta_model.generate_embeddings(text)['embeddings'] for text in X_test]
@@ -149,11 +132,6 @@ class EntityRecognizer:
 
         try:
             embeddings = self.roberta_model.generate_embeddings(text)
-            if embeddings['status'] != 'success':
-                return {
-                    "status": "error",
-                    "message": embeddings.get("message", "Failed to generate embeddings.")
-                }
 
             # Predict multi-label entities
             predicted = self.classifier.predict([embeddings['embeddings']])[0]
@@ -171,7 +149,6 @@ class EntityRecognizer:
                 "status": "error",
                 "message": "An error occurred while recognizing entities."
             }
-
 
 if __name__ == "__main__":
     # Example usage
@@ -207,9 +184,7 @@ if __name__ == "__main__":
     })
 
     # Train the model
-    # Uncomment the following lines if running for the first time
-    # entity_recognizer.train_model(training_data)
-    # entity_recognizer.save_model()
+    entity_recognizer.train_model(training_data)
 
     # Load the model
     entity_recognizer.load_model()

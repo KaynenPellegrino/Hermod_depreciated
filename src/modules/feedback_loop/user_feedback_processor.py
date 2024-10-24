@@ -15,11 +15,7 @@ from datetime import datetime
 import time
 import pandas as pd
 from sqlalchemy import create_engine, text
-import nltk
-from nltk.corpus import stopwords
-from nltk.sentiment import SentimentIntensityAnalyzer
-from textblob import TextBlob
-import spacy
+from transformers import pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 from dotenv import load_dotenv
@@ -142,22 +138,9 @@ class NLPProcessor:
     """
 
     def __init__(self):
-        # Initialize NLTK resources
-        nltk.download('punkt')
-        nltk.download('stopwords')
-        nltk.download('vader_lexicon')
-        self.stop_words = set(stopwords.words('english'))
-        self.sentiment_analyzer = SentimentIntensityAnalyzer()
-
-        # Initialize spaCy
-        try:
-            self.nlp = spacy.load('en_core_web_sm')
-            logging.info("spaCy English model loaded successfully.")
-        except OSError:
-            logging.info("Downloading spaCy English model...")
-            from spacy.cli import download
-            download('en_core_web_sm')
-            self.nlp = spacy.load('en_core_web_sm')
+        # Use Hugging Face pipelines
+        self.sentiment_analyzer = pipeline("sentiment-analysis")
+        self.tokenizer = pipeline("token-classification")
 
         # Initialize TF-IDF Vectorizer and LDA for topic modeling
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
@@ -165,29 +148,21 @@ class NLPProcessor:
 
     def preprocess_text(self, text):
         """
-        Preprocess the text by tokenizing, removing stopwords, and lemmatizing.
+        Preprocess the text by tokenizing using Hugging Face tokenizer.
         """
-        doc = self.nlp(text.lower())
-        tokens = [token.lemma_ for token in doc if token.is_alpha and token.text not in self.stop_words]
+        tokens = self.tokenizer.tokenizer(text)
         return ' '.join(tokens)
 
     def extract_sentiment(self, text):
         """
-        Extract sentiment scores from the text.
+        Extract sentiment scores from the text using Hugging Face's sentiment analysis.
         """
-        sentiment = self.sentiment_analyzer.polarity_scores(text)
-        return sentiment['compound']  # Compound score as overall sentiment
-
-    def extract_subjectivity(self, text):
-        """
-        Extract subjectivity score from the text using TextBlob.
-        """
-        blob = TextBlob(text)
-        return blob.sentiment.subjectivity  # Subjectivity score
+        sentiment = self.sentiment_analyzer(text)
+        return sentiment[0]['score']  # Overall sentiment score
 
     def perform_topic_modeling(self, texts):
         """
-        Perform topic modeling on the preprocessed texts.
+        Perform topic modeling using TF-IDF and LDA.
         """
         tfidf_matrix = self.vectorizer.fit_transform(texts)
         self.lda.fit(tfidf_matrix)
@@ -241,10 +216,6 @@ class UserFeedbackProcessor:
         raw_feedback_df['sentiment_score'] = raw_feedback_df['feedback_text'].apply(
             self.nlp_processor.extract_sentiment)
 
-        # Extract subjectivity
-        raw_feedback_df['subjectivity_score'] = raw_feedback_df['feedback_text'].apply(
-            self.nlp_processor.extract_subjectivity)
-
         # Perform topic modeling
         topics = self.nlp_processor.perform_topic_modeling(raw_feedback_df['processed_text'])
         topic_keywords = self.nlp_processor.get_topic_keywords()
@@ -252,7 +223,7 @@ class UserFeedbackProcessor:
 
         # Select and rename columns for processed feedback
         processed_feedback_df = raw_feedback_df[['id', 'user_id', 'feedback_text', 'processed_text',
-                                                 'sentiment_score', 'subjectivity_score', 'topic', 'timestamp']].copy()
+                                                 'sentiment_score', 'topic', 'timestamp']].copy()
 
         # Insert processed feedback into the database
         self.db.insert_processed_feedback(self.processed_table, processed_feedback_df)

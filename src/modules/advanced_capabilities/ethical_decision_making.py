@@ -1,14 +1,11 @@
-# src/modules/advanced_capabilities/ethical_decision_making.py
-
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 import pandas as pd
 import joblib
 import os
-import re
 
-import spacy
+from transformers import AutoTokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
@@ -16,7 +13,6 @@ from sklearn.metrics import classification_report
 
 from src.utils.logger import get_logger
 from src.utils.configuration_manager import ConfigurationManager
-from src.utils.helpers import format_code_snippet
 
 
 class EthicalDecisionMaker:
@@ -41,20 +37,13 @@ class EthicalDecisionMaker:
         # Load configuration settings for the project
         self.config = self.config_manager.get_configuration(project_id)
 
-        # Initialize spaCy model for text preprocessing
-        self.model_name = self.config.get('ethical_decision_maker.spacy_model', 'en_core_web_sm')
-        self.logger.debug(f"Loading spaCy model: {self.model_name}")
-
-        try:
-            self.nlp = spacy.load(self.model_name, disable=['parser', 'ner'])
-            self.logger.info(f"spaCy model '{self.model_name}' loaded successfully.")
-        except Exception as e:
-            self.logger.error(f"Failed to load spaCy model '{self.model_name}': {e}", exc_info=True)
-            raise
+        # Initialize Hugging Face tokenizer for text preprocessing
+        self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+        self.logger.info(f"Hugging Face tokenizer 'bert-base-uncased' loaded successfully.")
 
         # Initialize the machine learning pipeline
         self.pipeline = Pipeline([
-            ('tfidf', TfidfVectorizer()),
+            ('tfidf', TfidfVectorizer(tokenizer=self.tokenizer.tokenize, lowercase=True)),
             ('clf', LogisticRegression(max_iter=1000)),
         ])
 
@@ -77,9 +66,7 @@ class EthicalDecisionMaker:
 
             # Split the data into training and testing sets
             from sklearn.model_selection import train_test_split
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=42
-            )
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
 
             # Fit the pipeline on the training data
             self.pipeline.fit(X_train, y_train)
@@ -155,7 +142,7 @@ class EthicalDecisionMaker:
 
     def preprocess_text(self, text: str) -> str:
         """
-        Preprocesses the input text using spaCy (tokenization, lemmatization, etc.).
+        Preprocesses the input text using the Hugging Face tokenizer.
 
         Args:
             text (str): The text to preprocess.
@@ -166,8 +153,8 @@ class EthicalDecisionMaker:
         self.logger.debug(f"Preprocessing text for ethical assessment: {text}")
 
         try:
-            doc = self.nlp(text.lower())
-            tokens = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
+            # Tokenize and preprocess using Hugging Face tokenizer
+            tokens = self.tokenizer.tokenize(text.lower())
             preprocessed_text = ' '.join(tokens)
             self.logger.debug(f"Preprocessed text: {preprocessed_text}")
             return preprocessed_text
@@ -179,9 +166,6 @@ class EthicalDecisionMaker:
 
 if __name__ == "__main__":
     # Example usage
-    import pandas as pd
-
-    # Initialize the EthicalDecisionMaker with a project_id
     project_id = "proj_12345"
     ethical_maker = EthicalDecisionMaker(project_id)
 
