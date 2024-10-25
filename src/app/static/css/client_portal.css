@@ -1,0 +1,78 @@
+/* src/app/static/css/client_portal.css */
+
+/* Container for the client portal */
+.client-portal-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Header styling */
+.client-portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+.client-portal-header h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+.client-portal-header .logout-button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.client-portal-header .logout-button:hover {
+    background-color: #ff1a1a;
+}
+
+/* Project list styling */
+.project-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.project-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-item h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.project-item .status {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.project-item .status.completed {
+    color: #28a745;
+}
+
+.project-item .status.in-progress {
+    color: #ffc107;
+}
+
+.project-item .status.pending {
+    color: #6c757d;
+}

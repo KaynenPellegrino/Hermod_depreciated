@@ -1,0 +1,30 @@
+<!-- src/app/templates/client_portal/projects.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Your Projects - Hermod{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/client_portal.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="client-projects-container">
+        <h2>Your Projects</h2>
+        <ul class="project-list">
+            {% for project in projects %}
+                <li class="project-item">
+                    <a href="{{ url_for('client_portal.project_detail', project_id=project.project_id) }}">{{ project.project_name }}</a>
+                    <span class="status {{ project.status.replace(' ', '-').lower() }}">{{ project.status }}</span>
+                </li>
+            {% else %}
+                <li>No projects found.</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('client_portal.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/client_portal.js') }}"></script>
+{% endblock %}

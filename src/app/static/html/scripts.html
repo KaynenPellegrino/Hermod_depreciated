@@ -1,0 +1,37 @@
+<!-- src/app/static/html/scripts.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermod Scripts</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/scripts.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Hermod Scripts</h1>
+        <div>
+            <a href="/client_portal">Client Portal</a>
+            <a href="/dashboard">Dashboard</a>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Scripts Overview</h2>
+        <p>This section provides an overview of the scripts running in the Hermod application.</p>
+
+        <!-- Example Script Status -->
+        <div class="script-status">
+            <h3>Active Scripts</h3>
+            <ul id="activeScriptsList">
+                <!-- Active scripts will be dynamically loaded here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="/static/js/scripts.js"></script>
+</body>
+</html>

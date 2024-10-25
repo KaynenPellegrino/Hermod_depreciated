@@ -1,0 +1,74 @@
+/* src/app/static/css/dashboard.css */
+
+/* Dashboard container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #eef2f3;
+    min-height: 100vh;
+}
+
+/* Statistics section */
+.dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 30%;
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.stat-card p {
+    font-size: 2em;
+    color: #333;
+}
+
+/* Recent activities section */
+.recent-activities {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.recent-activities h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.activity-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.activity-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item .description {
+    color: #555;
+}
+
+.activity-item .timestamp {
+    color: #999;
+    font-size: 0.9em;
+}

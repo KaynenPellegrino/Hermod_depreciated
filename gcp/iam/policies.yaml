@@ -1,0 +1,35 @@
+# gcp/iam/policies.yaml
+
+bindings:
+  - role: roles/viewer
+    members:
+      - user:developer@example.com  # Replace with actual developer email
+
+  - role: roles/editor
+    members:
+      - user:admin@example.com  # Replace with actual admin email
+
+  - role: roles/iam.serviceAccountUser
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com  # Replace hermod-436500
+
+  - role: roles/container.admin
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com
+
+  - role: roles/storage.admin
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com
+
+  - role: roles/cloudsql.admin
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com
+
+  - role: roles/logging.logWriter
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com
+
+  # Add more bindings as necessary
+
+etag: BwWWja0YfJA=
+version: 1

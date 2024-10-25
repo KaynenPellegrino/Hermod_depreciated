@@ -1,0 +1,20 @@
+# gcp/app_engine/cron.yaml
+
+cron:
+  # Runs daily at 3 AM UTC for data backups
+  - description: "Daily Database Backup"
+    url: /tasks/backup
+    schedule: every day 03:00
+    timezone: UTC
+
+  # Runs every hour for periodic computations
+  - description: "Hourly Data Processing"
+    url: /tasks/process-data
+    schedule: every 60 minutes
+    timezone: UTC
+
+  # Runs weekly on Sundays at 4 AM UTC for maintenance
+  - description: "Weekly Maintenance"
+    url: /tasks/maintenance
+    schedule: every sunday 04:00
+    timezone: UTC

@@ -1,0 +1,32 @@
+# .github/workflows/issue_triage.yml
+
+name: "Issue Triage"
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Issue Triage with GitHub Actions
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            triage
+
+      - name: Assign to Maintainer
+        uses: actions-ecosystem/action-assign@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: maintainer_username
+
+      - name: Add Comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thank you for your issue! A maintainer will review it shortly.

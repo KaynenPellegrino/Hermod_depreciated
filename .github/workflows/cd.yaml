@@ -1,0 +1,64 @@
+# .github/workflows/cd.yaml
+
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - release/*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Google Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: gcr.io
+          username: _json_key
+          password: ${{ secrets.GCR_JSON_KEY }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/hermod-app:${{ github.sha }}
+
+      - name: Set up GCloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Deploy to Google App Engine
+        run: |
+          gcloud app deploy config/app_engine/app.yaml --quiet
+
+      - name: Deploy Cloud Functions
+        run: |
+          gcloud functions deploy hermod-function1 \
+            --entry-point=app \
+            --runtime=python310 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --set-env-vars DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }},DB_HOST=${{ secrets.DB_HOST }},DB_PORT=5432
+
+      - name: Notify Deployment Success
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "✅ Deployment successful for commit `${{ github.sha }}` to `${{ github.ref }}`."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

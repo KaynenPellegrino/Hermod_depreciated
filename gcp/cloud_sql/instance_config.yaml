@@ -1,0 +1,64 @@
+# gcp/cloud_sql/instance_config.yaml
+
+resources:
+  - name: hermod-cloud-sql-instance
+    type: gcp-types/sqladmin-v1beta4:instances
+    properties:
+      region: us-central1  # Replace with your desired region
+      databaseVersion: POSTGRES_14  # Specify the PostgreSQL version
+      tier: db-n1-standard-2  # Adjust based on your requirements
+      rootPassword: ${env:DB_ROOT_PASSWORD}  # Securely provide root password via environment variable
+      settings:
+        tier: db-n1-standard-2
+        dataDiskSizeGb: 50  # Storage capacity in GB
+        dataDiskType: PD_SSD  # Options: PD_SSD or PD_HDD
+        ipConfiguration:
+          authorizedNetworks:
+            - value: "YOUR_PUBLIC_IP/32"  # Replace with your IP or CIDR block for security
+          ipv4Enabled: true
+          privateNetwork: projects/hermod-436500/global/networks/default  # Replace hermod-436500
+        backupConfiguration:
+          enabled: true
+          startTime: "03:00"  # Backup start time in UTC
+          location: us-central1  # Backup storage location
+        maintenanceWindow:
+          day: 0  # Sunday
+          hour: 0  # Midnight UTC
+          updateTrack: stable
+        availabilityType: REGIONAL  # Options: ZONAL or REGIONAL for high availability
+        storageAutoResize: true
+        storageAutoResizeLimit: 100  # Maximum storage size in GB
+        activationPolicy: ALWAYS
+        databaseFlags:
+          - name: max_connections
+            value: "200"
+          - name: log_min_duration_statement
+            value: "500"
+        ipConfiguration:
+          authorizedNetworks:
+            - value: "YOUR_PUBLIC_IP/32"  # Replace with your IP or CIDR block
+          ipv4Enabled: true
+      project: hermod-436500  # Replace with your GCP project ID
+
+  - name: hermod-cloud-sql-database
+    type: gcp-types/sqladmin-v1beta4:databases
+    properties:
+      instance: $(ref.hermod-cloud-sql-instance.name)
+      name: hermod_db
+      charset: UTF8
+      collation: en_US.UTF8
+      project: hermod-436500  # Replace with your GCP project ID
+
+  - name: hermod-cloud-sql-user
+    type: gcp-types/sqladmin-v1beta4:users
+    properties:
+      instance: $(ref.hermod-cloud-sql-instance.name)
+      name: hermod_user
+      password: ${env:DB_USER_PASSWORD}  # Securely provide user password via environment variable
+      project: hermod-436500  # Replace with your GCP project ID
+
+outputs:
+  - name: cloud_sql_instance_connection_name
+    value: $(ref.hermod-cloud-sql-instance.connectionName)
+  - name: cloud_sql_instance_ip
+    value: $(ref.hermod-cloud-sql-instance.ipAddresses[0].ipAddress)

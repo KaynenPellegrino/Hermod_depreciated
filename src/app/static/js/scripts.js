@@ -1,37 +1,61 @@
-// static/js/scripts.js
+// src/app/static/js/scripts.js
 
-// Establish a connection to the SocketIO server
-const socket = io();
+/**
+ * Logs out the user by redirecting to the logout endpoint.
+ */
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = '/logout';
+    }
+}
 
-// Listen for the 'dashboard_update' event
-socket.on('dashboard_update', (data) => {
-    console.log('Received dashboard update:', data);
-    updateDashboard(data);
+/**
+ * Initializes modal functionalities.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    setupModalClose();
 });
 
-function updateDashboard(data) {
-    // Update title
-    document.getElementById('dashboard-title').innerText = data.title;
-
-    // Update metrics
-    const metricsList = document.getElementById('metrics-list');
-    metricsList.innerHTML = '';
-    for (const [metric, value] of Object.entries(data.metrics)) {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${metric.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}:</strong> <span>${value}</span>`;
-        metricsList.appendChild(li);
-    }
-
-    // Update alerts
-    const alertsList = document.getElementById('alerts-list');
-    alertsList.innerHTML = '';
-    data.alerts.forEach(alert => {
-        const li = document.createElement('li');
-        li.className = alert.type;
-        li.innerText = alert.message;
-        alertsList.appendChild(li);
+/**
+ * Sets up event listeners to close modals when clicking outside or on the close button.
+ */
+function setupModalClose() {
+    // Close modal when clicking on the close button
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
     });
 
-    // Update tools (if necessary)
-    // If the list of tools can change, implement similar logic
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', event => {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+}
+
+/**
+ * Displays an alert message.
+ * @param {string} type - The type of alert ('success' or 'error').
+ * @param {string} message - The message to display.
+ */
+function displayAlert(type, message) {
+    const container = document.querySelector('.container') || document.body;
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+
+    container.prepend(alertDiv);
+
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
 }

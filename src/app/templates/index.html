@@ -1,0 +1,15 @@
+<!-- src/app/templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Home - Hermod{% endblock %}
+
+{% block content %}
+    <div class="home-page">
+        <h2>Welcome to Hermod</h2>
+        <p>Your intelligent assistant for managing projects and automating tasks.</p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Get Started</a>
+        {% endif %}
+    </div>
+{% endblock %}

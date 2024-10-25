@@ -1,0 +1,57 @@
+<!-- src/app/templates/client_portal/dashboard.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Client Dashboard - Hermod{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/client_portal.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="client-dashboard-container">
+        <h2>Welcome, {{ current_user.username }}</h2>
+
+        <!-- Client Statistics -->
+        <section class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Your Projects</h3>
+                <p>{{ stats.your_projects }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Feedback Received</h3>
+                <p>{{ stats.feedback_received }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Sessions</h3>
+                <p>{{ stats.active_sessions }}</p>
+            </div>
+        </section>
+
+        <!-- Client Projects -->
+        <section class="client-projects">
+            <h3>Your Projects</h3>
+            <ul class="project-list">
+                {% for project in projects %}
+                    <li class="project-item">
+                        <a href="{{ url_for('client_portal.project_detail', project_id=project.project_id) }}">{{ project.project_name }}</a>
+                        <span class="status {{ project.status.replace(' ', '-').lower() }}">{{ project.status }}</span>
+                    </li>
+                {% else %}
+                    <li>No projects found.</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('client_portal.projects') }}" class="btn btn-secondary">View All Projects</a>
+        </section>
+
+        <!-- Submit Feedback -->
+        <section class="submit-feedback">
+            <h3>Submit Feedback</h3>
+            <a href="{{ url_for('client_portal.feedback') }}" class="btn btn-primary">Provide Feedback</a>
+        </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/client_portal.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,166 @@
+# gcp/kubernetes_engine/deployment.yaml
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hermod-namespace
+  labels:
+    name: hermod-namespace
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermod-deployment
+  namespace: hermod-namespace
+  labels:
+    app: hermod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hermod
+  template:
+    metadata:
+      labels:
+        app: hermod
+    spec:
+      containers:
+        - name: hermod-container
+          image: gcr.io/<hermod-436500>/hermod:latest  # Replace <hermod-436500> with your GCP project ID
+          ports:
+            - containerPort: 8000  # Replace with your application's listening port
+          env:
+            - name: ENVIRONMENT
+              value: "production"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hermod-secrets
+                  key: database_url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gcr-json-key  # Ensure this secret exists for pulling images from GCR
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hermod-service
+  namespace: hermod-namespace
+  labels:
+    app: hermod
+spec:
+  type: LoadBalancer  # Use ClusterIP for internal services or LoadBalancer for external access
+  selector:
+    app: hermod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000  # Must match the containerPort in the Deployment
+      name: http
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hermod-config
+  namespace: hermod-namespace
+data:
+  APP_ENV: "production"
+  LOG_LEVEL: "info"
+  # Add other configuration parameters as needed
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hermod-secrets
+  namespace: hermod-namespace
+type: Opaque
+data:
+  database_url: <BASE64_ENCODED_DATABASE_URL>  # Replace with your base64-encoded database URL
+  # Add other secrets as needed (e.g., API keys, tokens)
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hermod-ingress
+  namespace: hermod-namespace
+  annotations:
+    kubernetes.io/ingress.class: "gce"  # For GKE Ingress
+    networking.gke.io/managed-certificates: "hermod-cert"  # If using Managed Certificates
+spec:
+  rules:
+    - host: hermod.example.com  # Replace with your domain
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hermod-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - hermod.example.com  # Replace with your domain
+      secretName: hermod-tls  # Kubernetes Secret for TLS certificates
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: hermod-cert
+  namespace: hermod-namespace
+spec:
+  domains:
+    - hermod.example.com  # Replace with your domain
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hermod-hpa
+  namespace: hermod-namespace
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hermod-deployment
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70

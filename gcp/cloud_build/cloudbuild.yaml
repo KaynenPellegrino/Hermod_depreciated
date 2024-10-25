@@ -1,0 +1,180 @@
+# gcp/cloud_build/cloudbuild.yaml
+
+# Define substitutions for project-specific variables
+substitutions:
+  _PROJECT_ID: 'hermod-project'  # Replace with your GCP project ID
+  _REGION: 'us-central1'        # Replace with your desired GCP region
+  _CLUSTER_NAME: 'hermod-cluster'  # Replace with your GKE cluster name
+  _CLOUD_SQL_INSTANCE: 'hermod-cloud-sql-instance'  # Replace with your Cloud SQL instance name
+  _CLOUD_SQL_DATABASE: 'hermod_db'  # Replace with your Cloud SQL database name
+  _CLOUD_SQL_USER: 'hermod_user'    # Replace with your Cloud SQL user
+  _CLOUD_SQL_PASSWORD: 'hermod_password'  # Replace with your Cloud SQL user password
+  _CLOUD_STORAGE_BUCKET: 'hermod-data-bucket'  # Replace with your Cloud Storage bucket name
+  _CLOUD_STORAGE_LOG_BUCKET: 'hermod-logging-bucket'  # Replace with your logging bucket name
+
+# Define secrets to be used in build steps
+secrets:
+  - kmsKeyName: projects/hermod-project/locations/global/keyRings/hermod-keyring/cryptoKeys/hermod-key
+    secretEnv:
+      GCR_JSON_KEY: projects/hermod-project/secrets/gcr-json-key/versions/1
+      DB_PASSWORD: projects/hermod-project/secrets/db-password/versions/1
+
+# Define the steps for Cloud Build
+steps:
+  # Step 1: Authenticate Docker with GCR using the JSON key
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'login'
+      - '-u'
+      - '_json_key'
+      - '-p'
+      - '${_SECRET_GCR_JSON_KEY}'
+      - 'https://gcr.io'
+    secretEnv: ['_SECRET_GCR_JSON_KEY=GCR_JSON_KEY']
+
+  # Step 2: Build Docker image for the main application
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/hermod-436500/hermod-app:latest'
+      - './kubernetes_engine'
+    id: 'Build_Docker_Image'
+
+  # Step 3: Push Docker image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/hermod-436500/hermod-app:latest'
+    id: 'Push_Docker_Image'
+
+  # Step 4: Deploy to GKE using kubectl
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Authenticate kubectl with GKE
+        gcloud container clusters get-credentials ${_CLUSTER_NAME} --region=${_REGION} --project=hermod-436500
+        
+        # Apply Kubernetes deployment
+        kubectl apply -f ./kubernetes_engine/deployment.yaml
+        
+        # Optional: Rollout status
+        kubectl rollout status deployment/hermod-deployment --namespace=hermod-namespace
+    id: 'Deploy_to_GKE'
+
+  # Step 5: Deploy Cloud Function
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'functions', 'deploy', 'hermod-function1',
+        '--entry-point=app',
+        '--runtime=python310',
+        '--trigger-http',
+        '--allow-unauthenticated',
+        '--set-env-vars=DB_USER=${_CLOUD_SQL_USER},DB_PASSWORD=${_SECRET_DB_PASSWORD},DB_NAME=${_CLOUD_SQL_DATABASE},DB_HOST=${_CLOUD_SQL_INSTANCE},DB_PORT=5432'
+      ]
+    secretEnv: ['_SECRET_DB_PASSWORD=DB_PASSWORD']
+    id: 'Deploy_Cloud_Function'
+
+  # Step 6: Apply IAM Policies
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'projects', 'set-iam-policy',
+        'hermod-436500',
+        './iam/policies.yaml'
+      ]
+    id: 'Apply_IAM_Policies'
+
+  # Step 7: Create Custom IAM Roles
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'deployment-manager', 'deployments', 'create',
+        'hermod-custom-roles',
+        '--config', './iam/roles.yaml'
+      ]
+    id: 'Create_Custom_IAM_Roles'
+
+  # Step 8: Apply Cloud Storage Access Policies
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      [
+        'iam', 'set',
+        './cloud_storage/access_policies.yaml',
+        'gs://${_CLOUD_STORAGE_BUCKET}'
+      ]
+    id: 'Apply_Cloud_Storage_Access_Policies'
+
+  # Step 9: Configure Cloud Storage Buckets
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      [
+        'versioning', 'set', 'on',
+        'gs://${_CLOUD_STORAGE_BUCKET}'
+      ]
+    id: 'Enable_Storage_Versioning'
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      [
+        'lifecycle', 'set',
+        './cloud_storage/bucket_config.yaml',
+        'gs://${_CLOUD_STORAGE_BUCKET}'
+      ]
+    id: 'Set_Storage_Lifecycle_Rules'
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      [
+        'logging', 'set', 'on',
+        '-b', 'gs://${_CLOUD_STORAGE_LOG_BUCKET}',
+        '-o', 'hermod-access-logs/',
+        'gs://${_CLOUD_STORAGE_BUCKET}'
+      ]
+    id: 'Configure_Storage_Logging'
+
+  # Step 10: Deploy Cloud SQL Instance using Deployment Manager
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'deployment-manager', 'deployments', 'create',
+        'hermod-cloud-sql-deployment',
+        '--config', './cloud_sql/instance_config.yaml'
+      ]
+    id: 'Deploy_Cloud_SQL_Instance'
+
+  # Step 11: Initialize Database Schema and Seed Data
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      [
+        '-c',
+        |
+        # Wait for Cloud SQL instance to be ready
+        until gcloud sql instances describe ${_CLOUD_SQL_INSTANCE} --project=hermod-436500 --format="value(state)" | grep -q RUNNABLE; do
+          echo "Waiting for Cloud SQL instance to be RUNNABLE..."
+          sleep 10
+        done
+        
+        # Execute the SQL script to set up the database
+        gcloud sql connect ${_CLOUD_SQL_INSTANCE} --user=${_CLOUD_SQL_USER} --quiet < ./cloud_sql/database_setup.sql
+      ]
+    id: 'Initialize_Cloud_SQL_Database'
+
+# Define artifacts to push (Docker image)
+images:
+  - 'gcr.io/hermod-436500/hermod-app:latest'
+
+# Specify secrets required for the build
+availableSecrets:
+  secretManager:
+    - versionName: 'projects/hermod-project/secrets/gcr-json-key/versions/1'
+      env: 'GCR_JSON_KEY'
+    - versionName: 'projects/hermod-project/secrets/db-password/versions/1'
+      env: 'DB_PASSWORD'
+
+# Define the timeout for the build
+timeout: '1200s'

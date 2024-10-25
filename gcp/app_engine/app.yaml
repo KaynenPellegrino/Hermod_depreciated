@@ -1,0 +1,37 @@
+# gcp/app_engine/app.yaml
+
+runtime: python310  # Specifies the Python runtime version
+
+service: default  # Name of the service; change if deploying multiple services
+
+instance_class: F2  # Instance class; adjust based on performance requirements
+
+entrypoint: gunicorn -b :$PORT main:app  # Command to start the application
+
+env_variables:
+  DB_USER: "hermod_user"  # Replace with your database user
+  DB_PASSWORD: "your_secure_password"  # Replace with your database password
+  DB_NAME: "hermod_db"  # Replace with your database name
+  DB_HOST: "35.223.123.456"  # Replace with your Cloud SQL instance IP or connection name
+  DB_PORT: "5432"  # Default PostgreSQL port
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.75
+
+handlers:
+  - url: /static
+    static_dir: static  # Directory for static files
+
+  - url: /.*
+    script: auto  # All other URLs are handled by the application
+
+health_check:
+  enable_health_check: True
+  check_interval_sec: 30
+  timeout_sec: 4
+  unhealthy_threshold: 2
+  healthy_threshold: 2
+  restart_threshold: 60

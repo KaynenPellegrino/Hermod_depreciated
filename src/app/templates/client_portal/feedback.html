@@ -1,0 +1,47 @@
+<!-- src/app/templates/client_portal/feedback.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Submit Feedback - Hermod{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/client_portal.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="feedback-container">
+        <h2>Submit Feedback</h2>
+        <form method="POST" action="{{ url_for('client_portal.submit_feedback') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.project.label }}
+                {{ form.project(class="form-control") }}
+                {% for error in form.project.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.rating.label }}
+                {{ form.rating(class="form-control") }}
+                {% for error in form.rating.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.comments.label }}
+                {{ form.comments(class="form-control", rows="4") }}
+                {% for error in form.comments.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-success") }}
+            </div>
+        </form>
+        <a href="{{ url_for('client_portal.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+{% endblock %}

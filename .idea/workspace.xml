@@ -5,15 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/templates/project_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/cd.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/cd.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/codeql-analysis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/codeql-analysis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/issue_triage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/issue_triage.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/security_scans.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/security_scans.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/ethical_decision_making.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/ethical_decision_making.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/feedback_loop/user_feedback_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/feedback_loop/user_feedback_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/cnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/rnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/rnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/multimodal/models/transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/multimodal/models/transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/nlu/entity_recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/nlu/entity_recognizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.conf" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/production.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/testing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/app_engine/app.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/app_engine/app.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/app_engine/cron.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/app_engine/cron.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/app_engine/dispatch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/app_engine/dispatch.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/app_engine/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/app_engine/index.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_build/cloudbuild.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_build/cloudbuild.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_functions/function1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_functions/function1/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_functions/function1/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_functions/function1/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_sql/database_setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_sql/database_setup.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_sql/instance_config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_sql/instance_config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_storage/access_policies.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_storage/access_policies.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/cloud_storage/bucket_config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/cloud_storage/bucket_config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/iam/policies.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/iam/policies.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/iam/roles.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/iam/roles.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcp/kubernetes_engine/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gcp/kubernetes_engine/deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/css/client_portal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/css/client_portal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/css/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/css/scripts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/css/scripts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/html/client_portal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/html/client_portal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/html/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/html/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/html/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/html/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/html/scripts.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/html/scripts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/js/client_portal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/js/client_portal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/js/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/static/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/client_portal/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/client_portal/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/client_portal/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/client_portal/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/client_portal/project_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/client_portal/project_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/client_portal/projects.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/client_portal/projects.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,21 +94,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ios_template.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Development",
-    "last_opened_file_path": "C:/Users/kayne/PycharmProjects/Hermod/data/models/nlu_models/qa_model",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ios_template.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Development&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kayne/PycharmProjects/Hermod/data/models/nlu_models/qa_model&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kayne\PycharmProjects\Hermod\data\models\nlu_models\qa_model" />
@@ -109,7 +148,8 @@
       <workItem from="1729570452100" duration="889000" />
       <workItem from="1729571810451" duration="9327000" />
       <workItem from="1729740412603" duration="6699000" />
-      <workItem from="1729747572882" duration="5102000" />
+      <workItem from="1729747572882" duration="5169000" />
+      <workItem from="1729822382092" duration="9201000" />
     </task>
     <servers />
   </component>

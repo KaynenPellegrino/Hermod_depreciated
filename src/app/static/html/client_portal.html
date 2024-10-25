@@ -1,0 +1,61 @@
+<!-- src/app/static/html/client_portal.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermod Client Portal</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/client_portal.css">
+    <link rel="stylesheet" href="/static/css/scripts.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Hermod Client Portal</h1>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="client-portal-container">
+        <h2>Your Projects</h2>
+        <ul class="project-list" id="projectList">
+            <!-- Projects will be dynamically loaded here -->
+        </ul>
+
+        <button onclick="openCreateProjectModal()">Create New Project</button>
+    </div>
+
+    <!-- Create Project Modal -->
+    <div id="createProjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCreateProjectModal()">&times;</span>
+            <h2>Create New Project</h2>
+            <form id="createProjectForm">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" required>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <label for="programmingLanguage">Programming Language:</label>
+                <select id="programmingLanguage" name="programmingLanguage" required>
+                    <option value="">Select Language</option>
+                    <option value="Python">Python</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Java">Java</option>
+                    <option value="C++">C++</option>
+                    <option value="Go">Go</option>
+                </select>
+
+                <button type="submit">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/client_portal.js"></script>
+    <script src="/static/js/scripts.js"></script>
+</body>
+</html>

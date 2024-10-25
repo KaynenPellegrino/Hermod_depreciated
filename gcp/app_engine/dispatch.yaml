@@ -1,0 +1,14 @@
+# gcp/app_engine/dispatch.yaml
+
+dispatch:
+  # Route API requests to the 'api' service
+  - url: "*/api/*"
+    service: api
+
+  # Route admin interface requests to the 'admin' service
+  - url: "*/admin/*"
+    service: admin
+
+  # Route all other requests to the 'default' service
+  - url: "*/*"
+    service: default

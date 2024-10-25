@@ -1,0 +1,68 @@
+# gcp/iam/roles.yaml
+
+- name: projects/hermod-436500/roles/HermodKubernetesAdmin
+  title: Hermod Kubernetes Administrator
+  description: Custom role for managing Kubernetes Engine resources specific to Hermod.
+  stage: GA
+  includedPermissions:
+    - container.clusters.create
+    - container.clusters.delete
+    - container.clusters.get
+    - container.clusters.list
+    - container.clusters.update
+    - container.deployments.create
+    - container.deployments.delete
+    - container.deployments.get
+    - container.deployments.list
+    - container.deployments.update
+    - container.services.create
+    - container.services.delete
+    - container.services.get
+    - container.services.list
+    - container.services.update
+    - container.pods.create
+    - container.pods.delete
+    - container.pods.get
+    - container.pods.list
+    - container.pods.update
+    - container.nodes.get
+    - container.nodes.list
+
+- name: projects/hermod-436500/roles/HermodStorageAdmin
+  title: Hermod Storage Administrator
+  description: Custom role for managing Cloud Storage resources specific to Hermod.
+  stage: GA
+  includedPermissions:
+    - storage.buckets.create
+    - storage.buckets.delete
+    - storage.buckets.get
+    - storage.buckets.list
+    - storage.buckets.update
+    - storage.objects.create
+    - storage.objects.delete
+    - storage.objects.get
+    - storage.objects.list
+    - storage.objects.update
+
+- name: projects/hermod-436500/roles/HermodCloudSQLAdmin
+  title: Hermod Cloud SQL Administrator
+  description: Custom role for managing Cloud SQL instances specific to Hermod.
+  stage: GA
+  includedPermissions:
+    - cloudsql.instances.create
+    - cloudsql.instances.delete
+    - cloudsql.instances.get
+    - cloudsql.instances.list
+    - cloudsql.instances.update
+    - cloudsql.databases.create
+    - cloudsql.databases.delete
+    - cloudsql.databases.get
+    - cloudsql.databases.list
+    - cloudsql.databases.update
+    - cloudsql.users.create
+    - cloudsql.users.delete
+    - cloudsql.users.get
+    - cloudsql.users.list
+    - cloudsql.users.update
+
+# Add more custom roles as necessary

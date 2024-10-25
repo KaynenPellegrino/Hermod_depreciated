@@ -1,0 +1,24 @@
+# gcp/cloud_storage/access_policies.yaml
+
+bindings:
+  - role: roles/storage.objectViewer
+    members:
+      - user:developer@example.com  # Replace with actual developer email
+      - group:team-readers@example.com  # Replace with actual group email
+
+  - role: roles/storage.objectCreator
+    members:
+      - user:contributor@example.com  # Replace with actual contributor email
+
+  - role: roles/storage.objectAdmin
+    members:
+      - serviceAccount:hermod-service-account@hermod-436500.iam.gserviceaccount.com  # Replace <PROJECT_ID>
+
+  - role: roles/storage.admin
+    members:
+      - user:admin@example.com  # Replace with actual admin email
+
+  # Add more bindings as necessary
+
+etag: BwWWja0YfJA=
+version: 1

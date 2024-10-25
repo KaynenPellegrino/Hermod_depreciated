@@ -1,0 +1,29 @@
+# gcp/app_engine/index.yaml
+
+indexes:
+  # Composite index for querying projects by user_id and status
+  - kind: Project
+    properties:
+      - name: user_id
+      - name: status
+
+  # Composite index for querying feedback by hermod-436500 and rating
+  - kind: Feedback
+    properties:
+      - name: hermod-436500
+      - name: rating
+
+  # Composite index for querying logs by hermod-436500 and timestamp
+  - kind: Log
+    properties:
+      - name: hermod-436500
+      - name: timestamp
+
+  # Single-property indexes (automatically created, but listed here for clarity)
+  - kind: User
+    properties:
+      - name: email
+
+  - kind: User
+    properties:
+      - name: username
