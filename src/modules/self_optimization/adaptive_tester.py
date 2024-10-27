@@ -11,6 +11,7 @@ from src.modules.data_management.data_ingestor import DataIngestor
 from src.modules.feedback_loop.feedback_analyzer import FeedbackAnalyzer
 from src.modules.performance_monitoring.metrics_collector import MetricsCollector
 
+
 class AdaptiveTester:
     """
     Dynamically adjusts testing strategies based on code complexity and risk areas.

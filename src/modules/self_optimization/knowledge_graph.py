@@ -9,6 +9,7 @@ from src.utils.logger import get_logger
 from src.utils.configuration_manager import ConfigurationManager
 
 
+
 class KnowledgeGraphManager:
     """
     Manages the storage and querying of complex relationships between entities using Neo4j.
