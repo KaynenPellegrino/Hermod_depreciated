@@ -1,15 +1,11 @@
-import logging
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, List
 
 import joblib
-import os
-
-from transformers import AutoTokenizer
 import shap
-import torch
+from transformers import AutoTokenizer
 
-from src.utils.logger import get_logger
 from src.utils.configuration_manager import ConfigurationManager
+from src.utils.logger import get_logger
 
 
 class ExplainableAI:

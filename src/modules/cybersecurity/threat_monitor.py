@@ -1,32 +1,26 @@
 # src/modules/cybersecurity/threat_monitor.py
 
-import logging
 import os
-import json
 import threading
 import time
 from datetime import datetime
-from typing import Any, Dict, Optional, List
-
+from typing import Optional, List
 
 import pandas as pd
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-from sklearn.ensemble import IsolationForest
-
 from dotenv import load_dotenv
+from sklearn.ensemble import IsolationForest
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 # Import MetadataStorage from data_management module
-from src.modules.data_management.metadata_storage import MetadataStorage
-
+from src.modules.data_management.staging import MetadataStorage
 # Import NotificationManager from notifications module
-from src.modules.notifications.notification_manager import NotificationManager
+from src.modules.notifications.staging import NotificationManager
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
-from logging.handlers import RotatingFileHandler
 
 from src.utils.logger import get_logger
 

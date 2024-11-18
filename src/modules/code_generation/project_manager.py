@@ -3,10 +3,10 @@ import os
 import shutil
 from typing import Dict, Any
 from abc import ABC, abstractmethod
-import git  # GitPython library for Git integration
 
-from src.modules.collaboration.version_control import VersionControl
-from src.modules.data_management.metadata_storage import MetadataStorage
+
+from src.modules.collaboration.staging import VersionControl
+from src.modules.data_management.staging import MetadataStorage
 
 # Configure logging
 logging.basicConfig(

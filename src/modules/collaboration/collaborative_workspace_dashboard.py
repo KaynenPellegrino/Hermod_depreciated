@@ -1,13 +1,11 @@
 # src/modules/collaboration/collaborative_workspace_dashboard.py
 
-import os
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
-import logging
+from src.utils.configuration_manager import ConfigurationManager
+from src.utils.logger import get_logger
 
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
-from src.modules.collaboration.collaboration_tools import CollaborationTools
+from staging import CollaborationTools
 
 
 class CollaborativeWorkspaceDashboard:

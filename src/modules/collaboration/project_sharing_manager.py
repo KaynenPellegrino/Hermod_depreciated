@@ -3,10 +3,9 @@
 import os
 import logging
 from typing import List, Dict, Any
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
-from src.modules.collaboration.version_control import VersionControl
-from src.modules.collaboration.collaboration_tools import CollaborationTools
+from src.utils.logger import get_logger
+from src.utils.configuration_manager import ConfigurationManager
+from staging import VersionControl, CollaborationTools
 
 
 class ProjectSharingManager:

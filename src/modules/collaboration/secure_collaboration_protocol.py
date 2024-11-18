@@ -4,9 +4,9 @@ import os
 import logging
 from typing import Dict, Any
 from cryptography.fernet import Fernet, InvalidToken
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
-from src.modules.collaboration.collaboration_tools import CollaborationTools
+from src.utils.logger import get_logger
+from src.utils.configuration_manager import ConfigurationManager
+from staging import CollaborationTools
 
 
 class SecureCollaborationProtocol:

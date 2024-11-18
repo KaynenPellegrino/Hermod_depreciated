@@ -6,8 +6,8 @@ from typing import Optional
 
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, leave_room, join_room
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
+from src.utils.logger import get_logger
+from src.utils.configuration_manager import ConfigurationManager
 
 
 class VideoVoiceTools:

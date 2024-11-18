@@ -1,14 +1,14 @@
 import logging
-from typing import List, Dict, Any
-from project_management.project_manager import ProjectManager
-from documentation_generator.documentation_generator import DocumentationGenerator
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 import os
 import time
 from threading import Event
 
-# Configure logging
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
+
+from staging import ProjectManager, DocumentationGenerator
+
+# Configure logging`
 logging.basicConfig(
     filename='hermod_doc_updater.log',
     level=logging.DEBUG,

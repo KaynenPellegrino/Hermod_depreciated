@@ -10,10 +10,10 @@ import psutil
 from dotenv import load_dotenv
 
 # Import DataStorage from data_management module
-from src.modules.data_management.data_storage import DataStorage
+from src.modules.data_management.staging import DataStorage
 
 # Import NotificationManager from notifications module
-from src.modules.notifications.notification_manager import NotificationManager
+from src.modules.notifications.staging import NotificationManager
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
 from logging.handlers import RotatingFileHandler

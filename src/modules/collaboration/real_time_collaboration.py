@@ -5,12 +5,9 @@ import logging
 from typing import Dict, Any, List
 from flask import Flask, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
-from src.modules.collaboration.collaboration_tools import CollaborationTools
-from src.modules.collaboration.project_sharing_manager import ProjectSharingManager
-from src.modules.collaboration.secure_collaboration_protocol import SecureCollaborationProtocol
-from src.modules.collaboration.version_control import VersionControl
+from src.utils.logger import get_logger
+from src.utils.configuration_manager import ConfigurationManager
+from staging import CollaborationTools, ProjectSharingManager, SecureCollaborationProtocol, VersionControl
 
 
 class RealTimeCollaboration:

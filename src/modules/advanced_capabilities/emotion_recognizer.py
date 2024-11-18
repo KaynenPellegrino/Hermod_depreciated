@@ -1,14 +1,13 @@
 # src/nlu/emotion_recognizer.py
 
-import logging
+import os
 from typing import Dict, Any
 
 import pandas as pd
-import os
 
-from src.utils.logger import get_logger
+from src.modules.nlu.staging import RoBERTAModel
 from src.utils.configuration_manager import ConfigurationManager
-from src.modules.nlu.language_models.roberta_model import BERTModel
+from src.utils.logger import get_logger
 
 
 class EmotionRecognizer:
@@ -29,8 +28,8 @@ class EmotionRecognizer:
         self.config = self.config_manager.get_configuration(project_id)
         self.project_id = project_id
 
-        # Initialize BERTModel
-        self.bert_model = BERTModel(project_id)
+        # Initialize RoBERTAModel
+        self.roberta_model = RoBERTAModel(project_id)
 
         # Path to save/load the emotion recognition model (if using a separate classifier)
         self.model_path = self.config.get('emotion_recognizer.model_path', 'models/emotion_recognizer_proj_12345.joblib')
@@ -59,8 +58,8 @@ class EmotionRecognizer:
 
             # Generate embeddings for training data
             self.logger.debug("Generating embeddings for training data.")
-            X_train_embeddings = [self.bert_model.generate_embeddings(text)['embeddings'] for text in X_train]
-            X_test_embeddings = [self.bert_model.generate_embeddings(text)['embeddings'] for text in X_test]
+            X_train_embeddings = [self.roberta_model.generate_embeddings(text)['embeddings'] for text in X_train]
+            X_test_embeddings = [self.roberta_model.generate_embeddings(text)['embeddings'] for text in X_test]
 
             # Train a logistic regression classifier
             self.logger.debug("Training Logistic Regression classifier for emotion recognition.")
@@ -124,7 +123,7 @@ class EmotionRecognizer:
         self.logger.debug(f"Recognizing emotions in text: {text}")
 
         try:
-            embeddings = self.bert_model.generate_embeddings(text)
+            embeddings = self.roberta_model.generate_embeddings(text)
             if embeddings['status'] != 'success':
                 return {
                     "status": "error",

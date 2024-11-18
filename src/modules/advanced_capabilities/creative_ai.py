@@ -1,13 +1,13 @@
 # src/modules/advanced_capabilities/creative_ai.py
 
-import logging
-from typing import Dict, Any, List, Optional
-
-from src.utils.logger import get_logger
-from src.utils.helpers import format_code_snippet
-from src.utils.config_loader import ConfigurationManager
-import requests
 import json
+from typing import Dict, Any, Optional
+
+import requests
+
+from src.utils.config_loader import ConfigurationManager
+from src.utils.logger import get_logger
+
 
 class CreativeAI:
     """
@@ -20,7 +20,7 @@ class CreativeAI:
         self.logger = get_logger(__name__)
 
         # Load configuration settings
-        self.config = ConfigurationManager.get_config()
+        self.config = ConfigurationManager.get_configuration()
 
         # Initialize AI models or API clients
         self.ai_api_key = self.config.get('creative_ai.api_key', '')

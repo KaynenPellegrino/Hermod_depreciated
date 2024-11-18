@@ -3,8 +3,7 @@ import os
 import shutil
 from typing import List, Dict, Any
 from abc import ABC, abstractmethod
-from template_manager import TemplateManager  # Import real TemplateManager
-from project_manager import ProjectManager  # Import real ProjectManager
+from staging import TemplateManager, ProjectManager
 from language_models.code_gen_model import OpenAIModel, MockCodeGenModel  # Import CodeGen models
 from language_models.syntax_checker import PythonSyntaxChecker, JavaScriptSyntaxChecker, JavaSyntaxChecker  # Import Syntax Checkers
 from code_templates.web_app.django_template import DjangoTemplateGenerator

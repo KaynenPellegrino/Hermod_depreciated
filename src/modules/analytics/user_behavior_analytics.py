@@ -8,7 +8,7 @@ from typing import Optional, Dict, Any
 from dotenv import load_dotenv
 
 # Import DataStorage from data_management module
-from src.modules.data_management.data_storage import DataStorage
+from src.modules.data_management.staging import DataStorage
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
 from logging.handlers import RotatingFileHandler

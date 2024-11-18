@@ -1,28 +1,24 @@
 # src/modules/cybersecurity/threat_intelligence.py
 
-import logging
-import os
 import json
+import os
 import time
 from datetime import datetime
 from typing import Any, Dict, Optional, List
 
-import requests
-from dotenv import load_dotenv
 import feedparser
 import pandas as pd
-
+import requests
+from dotenv import load_dotenv
 # Import MetadataStorage from data_management module
-from src.modules.data_management.metadata_storage import MetadataStorage
-
+from src.modules.data_management.staging import MetadataStorage
 # Import NotificationManager from notifications module
-from src.modules.notifications.notification_manager import NotificationManager
+from src.modules.notifications.staging import NotificationManager
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
-from logging.handlers import RotatingFileHandler
 
 from src.utils.logger import get_logger
 

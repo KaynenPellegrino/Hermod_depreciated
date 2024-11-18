@@ -2,8 +2,7 @@
 
 import oqs
 import logging
-import os
-from typing import Tuple, Optional
+from typing import Tuple
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
 from logging.handlers import RotatingFileHandler

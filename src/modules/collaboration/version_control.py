@@ -1,12 +1,13 @@
 # src/modules/collaboration/version_control.py
 
-import os
 import logging
 from typing import List, Dict, Any, Optional
-from git import Repo, GitCommandError, Git
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
-from src.modules.code_generation.project_manager import VersionControlInterface
+
+from git import Repo, GitCommandError
+
+from src.modules.code_generation.staging import VersionControlInterface
+from src.utils.logger import get_logger
+
 
 class VersionControl(VersionControlInterface):
     """

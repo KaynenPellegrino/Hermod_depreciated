@@ -1,13 +1,12 @@
 # src/modules/advanced_capabilities/ai_collaborator.py
 
-import logging
-from typing import List, Dict, Any
+from typing import Dict, Any
 
-from src.utils.logger import get_logger
-from src.modules.code_generation.code_generator import CodeGenerator
-from src.modules.nlu.nlu_engine import NLUEngine
-from src.modules.code_generation.template_manager import TemplateManager
+from src.modules.code_generation.staging import CodeGenerator, TemplateManager
+from src.modules.nlu.staging import NLUEngine
 from src.utils.helpers import format_code_snippet
+from src.utils.logger import get_logger
+
 
 class AICollaborator:
     """

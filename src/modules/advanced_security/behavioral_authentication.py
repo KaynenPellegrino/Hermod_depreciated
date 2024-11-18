@@ -2,30 +2,29 @@
 
 import logging
 import os
-from datetime import datetime
-from typing import Optional, Dict, Any
-
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, ForeignKey
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-from sqlalchemy.exc import SQLAlchemyError
-
-# Import MetadataStorage from data_management module
-from src.modules.data_management.metadata_storage import MetadataStorage
-
-# Import NotificationManager from notifications module
-from src.modules.notifications.notification_manager import NotificationManager
-
-# For machine learning model handling
-from tensorflow.keras.models import load_model, Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping
 import pickle
+from datetime import datetime
+from typing import Dict, Any
+
 import numpy as np
+from dotenv import load_dotenv
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, confusion_matrix
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+
+# Import PyTorch modules
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+
+# Import MetadataStorage from data_management module
+from src.modules.data_management.staging import MetadataStorage
+# Import NotificationManager from notifications module
+from src.modules.notifications.staging import NotificationManager
 
 # Load environment variables
 load_dotenv()
@@ -62,6 +61,24 @@ class BehavioralProfile(Base):
     user = relationship("User", back_populates="behavioral_profile")
 
 
+class BehavioralAuthenticationModel(nn.Module):
+    """
+    PyTorch model for behavioral authentication.
+    """
+    def __init__(self, input_size: int):
+        super(BehavioralAuthenticationModel, self).__init__()
+        self.fc1 = nn.Linear(input_size, 64)
+        self.fc2 = nn.Linear(64, 32)
+        self.fc3 = nn.Linear(32, 1)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.sigmoid(self.fc3(x))
+        return x
+
+
 class BehavioralAuthenticationManager:
     """
     Manages behavior-based authentication using behavioral biometrics.
@@ -83,39 +100,30 @@ class BehavioralAuthenticationManager:
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
 
-        # Initialize machine learning model and scaler
-        try:
-            # Define paths to model and scaler
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            model_path = os.path.join(current_dir, '../../data/models/cybersecurity_models/behavioral_authentication_model.h5')
-            scaler_path = os.path.join(current_dir, '../../data/models/cybersecurity_models/behavioral_scaler.pkl')
+        # PyTorch model setup
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = BehavioralAuthenticationModel(input_size=4).to(self.device)
+        self.criterion = nn.BCELoss()
+        self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
 
-            # Load the trained model
-            if not os.path.exists(model_path):
-                logger.error(f"Behavioral authentication model not found at {model_path}.")
-                raise FileNotFoundError(f"Model file not found: {model_path}")
-            self.model = load_model(model_path)
+        # Load model and scaler if available
+        self.model_path = os.path.join(os.path.dirname(__file__), '../../data/models/cybersecurity_models/behavioral_authentication_model.pth')
+        self.scaler_path = os.path.join(os.path.dirname(__file__), '../../data/models/cybersecurity_models/behavioral_scaler.pkl')
+        if os.path.exists(self.model_path):
+            self.model.load_state_dict(torch.load(self.model_path))
+            self.model.eval()
             logger.info("Behavioral authentication model loaded successfully.")
 
-            # Load the pre-fitted scaler
-            if not os.path.exists(scaler_path):
-                logger.error(f"Behavioral scaler not found at {scaler_path}.")
-                raise FileNotFoundError(f"Scaler file not found: {scaler_path}")
-            with open(scaler_path, 'rb') as f:
+        if os.path.exists(self.scaler_path):
+            with open(self.scaler_path, 'rb') as f:
                 self.scaler = pickle.load(f)
             logger.info("Behavioral scaler loaded successfully.")
-
-        except Exception as e:
-            logger.exception(f"Failed to initialize machine learning components: {e}")
-            raise e  # Re-raise exception after logging
+        else:
+            self.scaler = StandardScaler()
 
     def register_behavior_profile(self, user_id: int, behavior_data: Dict[str, Any]) -> bool:
         """
         Registers or updates a user's behavioral biometric profile.
-
-        :param user_id: ID of the user.
-        :param behavior_data: Dictionary containing behavioral metrics.
-        :return: True if registration is successful, False otherwise.
         """
         session = self.Session()
         try:
@@ -168,19 +176,15 @@ class BehavioralAuthenticationManager:
     def assess_behavior(self, user_id: int, current_behavior: Dict[str, Any]) -> float:
         """
         Assesses the user's current behavior against their stored profile and returns a similarity score.
-
-        :param user_id: ID of the user.
-        :param current_behavior: Dictionary containing current behavioral metrics.
-        :return: Similarity score between 0 and 1. Higher scores indicate higher similarity.
         """
         session = self.Session()
         try:
             profile = session.query(BehavioralProfile).filter(BehavioralProfile.user_id == user_id).first()
             if not profile:
                 logger.warning(f"No behavioral profile found for user ID {user_id}.")
-                return 0.0  # Lowest score if no profile exists
+                return 0.0
 
-            # Extract stored metrics
+            # Extract stored and current metrics
             stored_metrics = np.array([
                 profile.typing_speed,
                 profile.typing_pattern_similarity,
@@ -188,7 +192,6 @@ class BehavioralAuthenticationManager:
                 profile.login_time_variance
             ]).reshape(1, -1)
 
-            # Extract current metrics
             current_metrics = np.array([
                 current_behavior.get('typing_speed', 0.0),
                 current_behavior.get('typing_pattern_similarity', 0.0),
@@ -200,42 +203,26 @@ class BehavioralAuthenticationManager:
             stored_normalized = self.scaler.transform(stored_metrics)
             current_normalized = self.scaler.transform(current_metrics)
 
-            # Predict similarity score using the loaded model
-            similarity_score = self.model.predict(current_normalized)[0][0]  # Assuming model outputs a single value
+            # Predict similarity score using the PyTorch model
+            self.model.eval()
+            with torch.no_grad():
+                similarity_score = self.model(torch.tensor(current_normalized, dtype=torch.float32).to(self.device)).item()
 
-            # Ensure the similarity score is within [0,1]
             similarity_score = max(0.0, min(1.0, similarity_score))
-
             logger.info(f"Behavioral assessment for user ID {user_id}: Similarity Score = {similarity_score:.4f}")
-
             return similarity_score
         except Exception as e:
             logger.error(f"Error during behavioral assessment for user ID {user_id}: {e}")
-            return 0.0  # Return lowest score on error
+            return 0.0
         finally:
             session.close()
 
-    def generate_device_fingerprint(self, device_info: Dict[str, Any]) -> str:
-        """
-        Generates a device fingerprint based on device information.
-
-        :param device_info: Dictionary containing device attributes.
-        :return: A hashed string representing the device fingerprint.
-        """
-        import hashlib
-        fingerprint_string = ''.join([str(value) for value in device_info.values()])
-        fingerprint_hash = hashlib.sha256(fingerprint_string.encode('utf-8')).hexdigest()
-        logger.debug(f"Generated device fingerprint: {fingerprint_hash}")
-        return fingerprint_hash
-
     def train_behavioral_model(self):
         """
-        Trains a behavioral authentication model using stored profiles.
-        Integrates machine learning models for enhanced assessments.
+        Trains the behavioral authentication model using stored profiles.
         """
         session = self.Session()
         try:
-            # Retrieve all behavioral profiles
             profiles = session.query(BehavioralProfile).all()
             if not profiles:
                 logger.warning("No behavioral profiles available for training.")
@@ -250,138 +237,42 @@ class BehavioralAuthenticationManager:
                     profile.login_time_variance
                 ] for profile in profiles
             ])
+            y = np.array([1] * len(X))  # Assuming all samples are legitimate for this example
 
-            # Retrieve labels from the User model or another source
-            # Assuming there's a 'is_anomalous' attribute in the User model
-            y = np.array([
-                profile.user.is_anomalous if hasattr(profile.user, 'is_anomalous') else 1
-                for profile in profiles
-            ])
+            # Split data into training and testing sets
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # Check if there are both classes present
-            unique_labels = np.unique(y)
-            if len(unique_labels) < 2:
-                logger.warning("Insufficient classes for training. Need both legitimate and anomalous samples.")
-                return
+            # Normalize data
+            X_train_scaled = self.scaler.fit_transform(X_train)
+            X_test_scaled = self.scaler.transform(X_test)
 
-            # Example: Creating synthetic anomalies by adding noise
-            num_anomalies = int(0.2 * X.shape[0])  # 20% anomalies
-            if num_anomalies > 0:
-                anomaly_data = X[:num_anomalies] + np.random.normal(0, 0.5, X[:num_anomalies].shape)
-                X = np.vstack((X, anomaly_data))
-                y = np.hstack((y, np.zeros(num_anomalies)))  # Label anomalies as 0
+            # Prepare data for PyTorch
+            train_dataset = TensorDataset(
+                torch.tensor(X_train_scaled, dtype=torch.float32),
+                torch.tensor(y_train, dtype=torch.float32)
+            )
+            train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
-                # Split data into training and testing sets
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            # Train the model
+            self.model.train()
+            for epoch in range(100):  # Adjust epochs as needed
+                epoch_loss = 0.0
+                for batch_X, batch_y in train_loader:
+                    batch_X, batch_y = batch_X.to(self.device), batch_y.to(self.device)
+                    self.optimizer.zero_grad()
+                    outputs = self.model(batch_X).squeeze()
+                    loss = self.criterion(outputs, batch_y)
+                    loss.backward()
+                    self.optimizer.step()
+                    epoch_loss += loss.item()
+                logger.info(f"Epoch {epoch + 1}, Loss: {epoch_loss:.4f}")
 
-                # Initialize and fit the scaler on training data
-                scaler = StandardScaler()
-                X_train_scaled = scaler.fit_transform(X_train)
-                X_test_scaled = scaler.transform(X_test)
-
-                # Define the model architecture
-                model = Sequential([
-                    Dense(64, activation='relu', input_shape=(X_train_scaled.shape[1],)),
-                    Dense(32, activation='relu'),
-                    Dense(1, activation='sigmoid')  # Output layer for binary classification
-                ])
-
-                # Compile the model
-                model.compile(optimizer=Adam(learning_rate=0.001),
-                              loss='binary_crossentropy',
-                              metrics=['accuracy'])
-
-                # Define early stopping to prevent overfitting
-                early_stop = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
-
-                # Train the model
-                history = model.fit(
-                    X_train_scaled, y_train,
-                    epochs=100,
-                    batch_size=32,
-                    validation_split=0.2,
-                    callbacks=[early_stop],
-                    verbose=1
-                )
-
-                # Evaluate the model on test data
-                y_pred = (model.predict(X_test_scaled) > 0.5).astype(int).flatten()
-                report = classification_report(y_test, y_pred)
-                cm = confusion_matrix(y_test, y_pred)
-                logger.info(f"Model Evaluation Report:\n{report}")
-                logger.info(f"Confusion Matrix:\n{cm}")
-
-                # Save the trained model
-                current_dir = os.path.dirname(os.path.abspath(__file__))
-                model_save_path = os.path.join(current_dir,
-                                               '../../data/models/cybersecurity_models/behavioral_authentication_model.h5')
-                model.save(model_save_path)
-                logger.info(f"Trained behavioral authentication model saved at {model_save_path}.")
-
-                # Save the fitted scaler
-                scaler_save_path = os.path.join(current_dir,
-                                                '../../data/models/cybersecurity_models/behavioral_scaler.pkl')
-                with open(scaler_save_path, 'wb') as f:
-                    pickle.dump(scaler, f)
-                logger.info(f"Fitted scaler saved at {scaler_save_path}.")
-
-                # Optionally, notify admin about the successful training
-                self.notification_manager.notify(
-                    channel='email',
-                    subject="Behavioral Authentication Model Trained Successfully",
-                    message=f"The behavioral authentication model has been trained and saved successfully on {datetime.utcnow().isoformat()} UTC.",
-                    recipients=[os.getenv('ALERT_RECIPIENT')]
-                )
-
+            # Save the trained model and scaler
+            torch.save(self.model.state_dict(), self.model_path)
+            with open(self.scaler_path, 'wb') as f:
+                pickle.dump(self.scaler, f)
+            logger.info("Model and scaler saved successfully.")
         except Exception as e:
             logger.exception(f"Error during behavioral model training: {e}")
         finally:
             session.close()
-
-    def save_behavioral_profile(self, user_id: int, behavior_data: Dict[str, Any]) -> bool:
-        """
-        Saves or updates the user's behavioral profile.
-
-        :param user_id: ID of the user.
-        :param behavior_data: Dictionary containing behavioral metrics.
-        :return: True if successful, False otherwise.
-        """
-        return self.register_behavior_profile(user_id, behavior_data)
-
-    # Additional methods can be added here for advanced functionalities
-
-
-# Example usage:
-if __name__ == "__main__":
-    # Initialize Behavioral Authentication Manager
-    behavior_manager = BehavioralAuthenticationManager()
-
-    # Example: Register a new behavioral profile for user ID 1
-    user_id = 1
-    behavior_data = {
-        'typing_speed': 60.0,  # Characters per minute
-        'typing_pattern_similarity': 0.85,  # Similarity score with stored pattern
-        'mouse_movement_similarity': 0.80,  # Similarity score with stored pattern
-        'login_time_variance': 15.0,  # Variance in login times (minutes)
-        'device_fingerprint': behavior_manager.generate_device_fingerprint({
-            'browser': 'Chrome',
-            'os': 'Windows',
-            'ip_address': '192.168.1.1'
-        })
-    }
-    success = behavior_manager.save_behavioral_profile(user_id, behavior_data)
-    print("Behavioral profile registration successful:", success)
-
-    # Example: Assess behavior during login attempt
-    current_behavior = {
-        'typing_speed': 58.0,
-        'typing_pattern_similarity': 0.80,
-        'mouse_movement_similarity': 0.78,
-        'login_time_variance': 12.0
-    }
-    similarity_score = behavior_manager.assess_behavior(user_id, current_behavior)
-    print(f"Similarity Score for user ID {user_id}: {similarity_score:.4f}")
-
-    # Example: Train the behavioral authentication model
-    behavior_manager.train_behavioral_model()
-    print("Behavioral authentication model training initiated.")

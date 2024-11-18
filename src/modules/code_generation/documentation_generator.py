@@ -1,12 +1,12 @@
+import ast
 import logging
 import os
-import shutil
-import ast
-from typing import List, Dict, Any
 from abc import ABC, abstractmethod
+from typing import List, Dict, Any
+
 from jinja2 import Template
-from project_manager import ProjectManager  # Replacing MockProjectManager with real ProjectManager
-from template_manager import TemplateManager  # Replacing MockTemplateManager with real TemplateManager
+
+from staging import ProjectManager, TemplateManager
 
 # Configure logging
 logging.basicConfig(

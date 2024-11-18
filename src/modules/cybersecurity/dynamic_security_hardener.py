@@ -2,11 +2,9 @@
 
 import logging
 import os
-import sys
 import subprocess
-import json
+import sys
 import time
-from datetime import datetime
 from typing import Any, Dict, Optional
 
 import requests

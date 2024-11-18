@@ -1,16 +1,15 @@
 # src/modules/collaboration/collaboration_tools.py
 
-import os
-import logging
-from typing import List, Dict, Any
-from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
+from typing import List
+
 from flask import Flask, request
 from flask_socketio import SocketIO, emit
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
-from utils.logger import get_logger
-from utils.configuration_manager import ConfigurationManager
 from src.modules.self_optimization.persistent_memory import PersistentMemory
+from src.utils.configuration_manager import ConfigurationManager
+from src.utils.logger import get_logger
 
 
 class CollaborationTools:

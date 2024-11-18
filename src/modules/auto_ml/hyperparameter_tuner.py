@@ -3,14 +3,12 @@
 import logging
 import os
 from typing import Any, Dict, List, Optional, Union
+
 import pandas as pd
-import numpy as np
-
-
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.metrics import make_scorer, accuracy_score, f1_score
 from sklearn.base import BaseEstimator
 from sklearn.exceptions import NotFittedError
+from sklearn.metrics import accuracy_score, f1_score
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
 try:
     from skopt import BayesSearchCV
@@ -19,7 +17,7 @@ try:
 except ImportError:
     SKOPT_AVAILABLE = False
 
-from src.modules.data_management.data_storage import DataStorage
+from src.modules.data_management.staging import DataStorage
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
 from logging.handlers import RotatingFileHandler
@@ -239,60 +237,80 @@ class HyperparameterTuner:
 
     # --------------------- Example Usage --------------------- #
 
-    def example_usage(self):
-        """
-        Demonstrates example usage of the HyperparameterTuner class.
-        """
-        import pandas as pd
-        from sklearn.datasets import load_iris
-        from sklearn.ensemble import RandomForestClassifier
-        from sklearn.model_selection import train_test_split
-        from skopt.space import Real, Categorical, Integer
+def example_usage(self):
+    """
+    Demonstrates example usage of the HyperparameterTuner class.
+    """
+    import pandas as pd
+    from sklearn.datasets import load_iris
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.model_selection import train_test_split
+    from skopt.space import Categorical, Integer
 
-        try:
-            # Initialize HyperparameterTuner
-            tuner = HyperparameterTuner()
+    try:
+        # Initialize HyperparameterTuner
+        tuner = HyperparameterTuner()
 
-            # Load dataset
-            iris = load_iris()
-            X = pd.DataFrame(iris.data, columns=iris.feature_names)
-            y = pd.Series(iris.target)
+        # Load dataset
+        iris = load_iris()
+        X = pd.DataFrame(iris.data, columns=iris.feature_names)
+        y = pd.Series(iris.target)
 
-            # Split data
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # Define model
-            model = RandomForestClassifier(random_state=42)
+        # Define model
+        model = RandomForestClassifier(random_state=42)
 
-            # Define parameter grids/distributions
-            param_grid = {
-                'n_estimators': [50, 100, 150],
-                'max_depth': [None, 10, 20],
-                'min_samples_split': [2, 5, 10]
-            }
+        # Define parameter grids/distributions
+        param_grid = {
+            'n_estimators': [50, 100, 150],
+            'max_depth': [None, 10, 20],
+            'min_samples_split': [2, 5, 10]
+        }
 
-            param_distributions = {
+        param_distributions = {
+            'n_estimators': Integer(50, 200),
+            'max_depth': Integer(5, 50),
+            'min_samples_split': Integer(2, 20),
+            'bootstrap': [True, False]
+        }
+
+        # Grid Search
+        grid_search = tuner.tune_with_grid_search(
+            model=model,
+            param_grid=param_grid,
+            X_train=X_train,
+            y_train=y_train,
+            scoring='accuracy',
+            cv=5,
+            n_jobs=-1
+        )
+
+        # Random Search
+        random_search = tuner.tune_with_random_search(
+            model=model,
+            param_distributions=param_distributions,
+            X_train=X_train,
+            y_train=y_train,
+            scoring='accuracy',
+            cv=5,
+            n_iter=20,
+            n_jobs=-1,
+            random_state=42
+        )
+
+        # Bayesian Optimization
+        if SKOPT_AVAILABLE:
+            search_spaces = {
                 'n_estimators': Integer(50, 200),
                 'max_depth': Integer(5, 50),
                 'min_samples_split': Integer(2, 20),
-                'bootstrap': [True, False]
+                'bootstrap': Categorical([True, False])
             }
-
-            # Grid Search
-            grid_search = tuner.tune_with_grid_search(
+            bayes_search = tuner.tune_with_bayesian_optimization(
                 model=model,
-                param_grid=param_grid,
-                X_train=X_train,
-                y_train=y_train,
-                scoring='accuracy',
-                cv=5,
-                n_jobs=-1
-            )
-
-            # Random Search
-            random_search = tuner.tune_with_random_search(
-                model=model,
-                param_distributions=param_distributions,
+                search_spaces=search_spaces,
                 X_train=X_train,
                 y_train=y_train,
                 scoring='accuracy',
@@ -301,54 +319,34 @@ class HyperparameterTuner:
                 n_jobs=-1,
                 random_state=42
             )
+        else:
+            bayes_search = None
 
-            # Bayesian Optimization
-            if SKOPT_AVAILABLE:
-                search_spaces = {
-                    'n_estimators': Integer(50, 200),
-                    'max_depth': Integer(5, 50),
-                    'min_samples_split': Integer(2, 20),
-                    'bootstrap': Categorical([True, False])
-                }
-                bayes_search = tuner.tune_with_bayesian_optimization(
-                    model=model,
-                    search_spaces=search_spaces,
-                    X_train=X_train,
-                    y_train=y_train,
-                    scoring='accuracy',
-                    cv=5,
-                    n_iter=20,
-                    n_jobs=-1,
-                    random_state=42
-                )
-            else:
-                bayes_search = None
+        # Save best models
+        tuner.save_best_model(grid_search, 'rf_grid_search', 'models/rf_grid_search.joblib')
+        tuner.save_best_model(random_search, 'rf_random_search', 'models/rf_random_search.joblib')
+        if bayes_search:
+            tuner.save_best_model(bayes_search, 'rf_bayes_search', 'models/rf_bayes_search.joblib')
 
-            # Save best models
-            tuner.save_best_model(grid_search, 'rf_grid_search', 'models/rf_grid_search.joblib')
-            tuner.save_best_model(random_search, 'rf_random_search', 'models/rf_random_search.joblib')
-            if bayes_search:
-                tuner.save_best_model(bayes_search, 'rf_bayes_search', 'models/rf_bayes_search.joblib')
+        # Evaluate best models
+        grid_metrics = tuner.evaluate_best_model(grid_search, X_test, y_test)
+        random_metrics = tuner.evaluate_best_model(random_search, X_test, y_test)
+        if bayes_search:
+            bayes_metrics = tuner.evaluate_best_model(bayes_search, X_test, y_test)
+        else:
+            bayes_metrics = None
 
-            # Evaluate best models
-            grid_metrics = tuner.evaluate_best_model(grid_search, X_test, y_test)
-            random_metrics = tuner.evaluate_best_model(random_search, X_test, y_test)
-            if bayes_search:
-                bayes_metrics = tuner.evaluate_best_model(bayes_search, X_test, y_test)
-            else:
-                bayes_metrics = None
+        # Print evaluation metrics
+        print("Grid Search Best Model Metrics:", grid_metrics)
+        print("Random Search Best Model Metrics:", random_metrics)
+        if bayes_metrics:
+            print("Bayesian Optimization Best Model Metrics:", bayes_metrics)
 
-            # Print evaluation metrics
-            print("Grid Search Best Model Metrics:", grid_metrics)
-            print("Random Search Best Model Metrics:", random_metrics)
-            if bayes_metrics:
-                print("Bayesian Optimization Best Model Metrics:", bayes_metrics)
+    except Exception as e:
+        logger.exception(f"Error in example usage: {e}")
 
-        except Exception as e:
-            logger.exception(f"Error in example usage: {e}")
+# --------------------- Main Execution --------------------- #
 
-    # --------------------- Main Execution --------------------- #
-
-    if __name__ == "__main__":
-        # Run the hyperparameter tuner example
-        example_usage()
+if __name__ == "__main__":
+    # Run the hyperparameter tuner example
+    example_usage()

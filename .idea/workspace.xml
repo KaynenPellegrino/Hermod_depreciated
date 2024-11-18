@@ -5,11 +5,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b417e267-b5fc-49f9-9029-c2ed5f7332c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/print_files.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/advanced_security/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/analytics/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/auto_ml/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/cloud_integrations/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/code_generation/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/collaboration/staging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/cybersecurity/staging.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Hermod.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Hermod.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/adaptive_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/adaptive_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/self_optimization/knowledge_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/self_optimization/knowledge_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/ai_collaborator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/ai_collaborator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/creative_ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/creative_ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/emotion_recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/emotion_recognizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_capabilities/explainable_ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/behavioral_authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/behavioral_authentication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/emerging_threat_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/emerging_threat_detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/advanced_security/quantum_resistant_algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/advanced_security/quantum_resistant_algorithms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/analytics/system_health_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/analytics/system_health_monitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/analytics/user_behavior_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/analytics/user_behavior_analytics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/analytics/user_behavior_insights.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/analytics/user_behavior_insights.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/auto_ml/hyperparameter_tuner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/auto_ml/hyperparameter_tuner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/auto_ml/model_ensemble_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/auto_ml/model_ensemble_builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cloud_integrations/cloud_service_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cloud_integrations/cloud_service_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/code_generation/code_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/code_generation/code_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/code_generation/doc_updater.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/code_generation/doc_updater.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/code_generation/documentation_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/code_generation/documentation_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/code_generation/language_models/code_gen_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/code_generation/language_models/code_gen_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/code_generation/project_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/code_generation/project_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/collaboration_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/collaboration_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/collaborative_workspace_dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/collaborative_workspace_dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/project_sharing_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/project_sharing_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/real_time_collaboration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/real_time_collaboration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/secure_collaboration_protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/secure_collaboration_protocol.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/secure_communication.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/secure_communication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/version_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/version_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/collaboration/video_voice_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/collaboration/video_voice_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/compliance_checker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/dynamic_security_hardener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/penetration_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_amplifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/security_stress_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/stress_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_intelligence.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/threat_monitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/cybersecurity/vulnerability_scanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/configuration_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/configuration_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +89,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -51,26 +101,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ios_template.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Development",
-    "last_opened_file_path": "C:/Users/kayne/PycharmProjects/Hermod",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ios_template.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kayne/PycharmProjects/Hermod&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "bigquery"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;bigquery&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kayne\PycharmProjects\Hermod\data\models\nlu_models\qa_model" />
@@ -140,6 +191,10 @@
       <workItem from="1729747572882" duration="5169000" />
       <workItem from="1729822382092" duration="9451000" />
       <workItem from="1729971498851" duration="1859000" />
+      <workItem from="1730010154718" duration="35000" />
+      <workItem from="1731894303605" duration="4524000" />
+      <workItem from="1731898899327" duration="795000" />
+      <workItem from="1731899723415" duration="8868000" />
     </task>
     <servers />
   </component>

@@ -4,7 +4,7 @@ import os
 import logging
 from typing import Dict, Any, Optional
 from src.utils.configuration_manager import ConfigurationManager
-from src.modules.notifications.notification_manager import NotificationManager
+from src.modules.notifications.staging import NotificationManager
 
 # AWS Imports
 import boto3

@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 
 # Import MetadataStorage from metadata_storage.py
-from modules.data_management.metadata_storage import MetadataStorage
+from src.modules.data_management.staging import MetadataStorage
 
 # Existing logging configuration
 from logging.handlers import RotatingFileHandler

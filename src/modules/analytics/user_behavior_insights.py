@@ -9,7 +9,7 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Import DataStorage from data_management module
-from src.modules.data_management.data_storage import DataStorage
+from src.modules.data_management.staging import DataStorage
 
 # Configure logging with RotatingFileHandler to prevent log files from becoming too large
 from logging.handlers import RotatingFileHandler
@@ -307,10 +307,3 @@ class UserBehaviorInsights:
                     print(recommendations)
         except Exception as e:
             logger.exception(f"Error in example usage: {e}")
-
-
-# --------------------- Main Execution --------------------- #
-
-if __name__ == "__main__":
-    # Run the user behavior insights example
-    example_usage()
